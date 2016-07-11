@@ -1,0 +1,152 @@
+Info: Starting: Create block symbol file (.bsf)
+Info: qsys-generate D:\cpld\wasca\fpga_firmware\wasca.qsys --block-symbol-file --output-directory=D:\cpld\wasca\fpga_firmware\wasca --family="MAX 10" --part=10M08SAE144C8GES
+Progress: Loading fpga_firmware/wasca.qsys
+Progress: Reading input file
+Progress: Adding altpll_0 [altpll 15.1]
+Progress: Parameterizing module altpll_0
+Progress: Adding audio_0 [altera_up_avalon_audio 15.1]
+Progress: Parameterizing module audio_0
+Progress: Adding clk_0 [clock_source 15.1]
+Progress: Parameterizing module clk_0
+Progress: Adding clk_1 [clock_source 15.1]
+Progress: Parameterizing module clk_1
+Progress: Adding external_sdram_controller [altera_avalon_new_sdram_controller 15.1]
+Progress: Parameterizing module external_sdram_controller
+Progress: Adding nios2_gen2_0 [altera_nios2_gen2 15.1]
+Progress: Parameterizing module nios2_gen2_0
+Progress: Adding onchip_flash_0 [altera_onchip_flash 15.1.1]
+Progress: Parameterizing module onchip_flash_0
+Progress: Adding onchip_memory2_0 [altera_avalon_onchip_memory2 15.1]
+Progress: Parameterizing module onchip_memory2_0
+Progress: Adding sega_saturn_abus_slave_0 [sega_saturn_abus_slave 1.0]
+Progress: Parameterizing module sega_saturn_abus_slave_0
+Progress: Adding spi_sd_card [altera_avalon_spi 15.1]
+Progress: Parameterizing module spi_sd_card
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Warning: wasca.altpll_0: altpll_0.c1_conduit must be exported, or connected to a matching conduit.
+Info: qsys-generate succeeded.
+Info: Finished: Create block symbol file (.bsf)
+Info: 
+Info: Starting: Create HDL design files for synthesis
+Info: qsys-generate D:\cpld\wasca\fpga_firmware\wasca.qsys --synthesis=VERILOG --output-directory=D:\cpld\wasca\fpga_firmware\wasca\synthesis --family="MAX 10" --part=10M08SAE144C8GES
+Progress: Loading fpga_firmware/wasca.qsys
+Progress: Reading input file
+Progress: Adding altpll_0 [altpll 15.1]
+Progress: Parameterizing module altpll_0
+Progress: Adding audio_0 [altera_up_avalon_audio 15.1]
+Progress: Parameterizing module audio_0
+Progress: Adding clk_0 [clock_source 15.1]
+Progress: Parameterizing module clk_0
+Progress: Adding clk_1 [clock_source 15.1]
+Progress: Parameterizing module clk_1
+Progress: Adding external_sdram_controller [altera_avalon_new_sdram_controller 15.1]
+Progress: Parameterizing module external_sdram_controller
+Progress: Adding nios2_gen2_0 [altera_nios2_gen2 15.1]
+Progress: Parameterizing module nios2_gen2_0
+Progress: Adding onchip_flash_0 [altera_onchip_flash 15.1.1]
+Progress: Parameterizing module onchip_flash_0
+Progress: Adding onchip_memory2_0 [altera_avalon_onchip_memory2 15.1]
+Progress: Parameterizing module onchip_memory2_0
+Progress: Adding sega_saturn_abus_slave_0 [sega_saturn_abus_slave 1.0]
+Progress: Parameterizing module sega_saturn_abus_slave_0
+Progress: Adding spi_sd_card [altera_avalon_spi 15.1]
+Progress: Parameterizing module spi_sd_card
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Warning: wasca.altpll_0: altpll_0.c1_conduit must be exported, or connected to a matching conduit.
+Info: wasca: Generating wasca "wasca" for QUARTUS_SYNTH
+Info: Inserting clock-crossing logic between cmd_demux_001.src6 and cmd_mux_006.sink0
+Info: Inserting clock-crossing logic between rsp_demux_006.src0 and rsp_mux_001.sink6
+Info: altpll_0: "wasca" instantiated altpll "altpll_0"
+Info: audio_0: Starting Generation of Audio Controller
+Info: audio_0: "wasca" instantiated altera_up_avalon_audio "audio_0"
+Info: external_sdram_controller: Starting RTL generation for module 'wasca_external_sdram_controller'
+Info: external_sdram_controller:   Generation command is [exec D:/altera/15.1/quartus/bin64/perl/bin/perl.exe -I D:/altera/15.1/quartus/bin64/perl/lib -I D:/altera/15.1/quartus/sopc_builder/bin/europa -I D:/altera/15.1/quartus/sopc_builder/bin/perl_lib -I D:/altera/15.1/quartus/sopc_builder/bin -I D:/altera/15.1/quartus/../ip/altera/sopc_builder_ip/common -I D:/altera/15.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_new_sdram_controller -- D:/altera/15.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_new_sdram_controller/generate_rtl.pl --name=wasca_external_sdram_controller --dir=C:/Users/user/AppData/Local/Temp/alt6993_3993798799495130853.dir/0004_external_sdram_controller_gen/ --quartus_dir=D:/altera/15.1/quartus --verilog --config=C:/Users/user/AppData/Local/Temp/alt6993_3993798799495130853.dir/0004_external_sdram_controller_gen//wasca_external_sdram_controller_component_configuration.pl  --do_build_sim=0  ]
+Info: external_sdram_controller: Done RTL generation for module 'wasca_external_sdram_controller'
+Info: external_sdram_controller: "wasca" instantiated altera_avalon_new_sdram_controller "external_sdram_controller"
+Info: nios2_gen2_0: "wasca" instantiated altera_nios2_gen2 "nios2_gen2_0"
+Info: onchip_flash_0: Generating top-level entity altera_onchip_flash
+Info: onchip_flash_0: "wasca" instantiated altera_onchip_flash "onchip_flash_0"
+Info: onchip_memory2_0: Starting RTL generation for module 'wasca_onchip_memory2_0'
+Info: onchip_memory2_0:   Generation command is [exec D:/altera/15.1/quartus/bin64/perl/bin/perl.exe -I D:/altera/15.1/quartus/bin64/perl/lib -I D:/altera/15.1/quartus/sopc_builder/bin/europa -I D:/altera/15.1/quartus/sopc_builder/bin/perl_lib -I D:/altera/15.1/quartus/sopc_builder/bin -I D:/altera/15.1/quartus/../ip/altera/sopc_builder_ip/common -I D:/altera/15.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2 -- D:/altera/15.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_onchip_memory2/generate_rtl.pl --name=wasca_onchip_memory2_0 --dir=C:/Users/user/AppData/Local/Temp/alt6993_3993798799495130853.dir/0006_onchip_memory2_0_gen/ --quartus_dir=D:/altera/15.1/quartus --verilog --config=C:/Users/user/AppData/Local/Temp/alt6993_3993798799495130853.dir/0006_onchip_memory2_0_gen//wasca_onchip_memory2_0_component_configuration.pl  --do_build_sim=0  ]
+Info: onchip_memory2_0: Done RTL generation for module 'wasca_onchip_memory2_0'
+Info: onchip_memory2_0: "wasca" instantiated altera_avalon_onchip_memory2 "onchip_memory2_0"
+Info: sega_saturn_abus_slave_0: "wasca" instantiated sega_saturn_abus_slave "sega_saturn_abus_slave_0"
+Info: spi_sd_card: Starting RTL generation for module 'wasca_spi_sd_card'
+Info: spi_sd_card:   Generation command is [exec D:/altera/15.1/quartus/bin64/perl/bin/perl.exe -I D:/altera/15.1/quartus/bin64/perl/lib -I D:/altera/15.1/quartus/sopc_builder/bin/europa -I D:/altera/15.1/quartus/sopc_builder/bin/perl_lib -I D:/altera/15.1/quartus/sopc_builder/bin -I D:/altera/15.1/quartus/../ip/altera/sopc_builder_ip/common -I D:/altera/15.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_spi -- D:/altera/15.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_spi/generate_rtl.pl --name=wasca_spi_sd_card --dir=C:/Users/user/AppData/Local/Temp/alt6993_3993798799495130853.dir/0008_spi_sd_card_gen/ --quartus_dir=D:/altera/15.1/quartus --verilog --config=C:/Users/user/AppData/Local/Temp/alt6993_3993798799495130853.dir/0008_spi_sd_card_gen//wasca_spi_sd_card_component_configuration.pl  --do_build_sim=0  ]
+Info: spi_sd_card: Done RTL generation for module 'wasca_spi_sd_card'
+Info: spi_sd_card: "wasca" instantiated altera_avalon_spi "spi_sd_card"
+Info: avalon_st_adapter: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_001: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_002: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_003: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_004: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_005: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_006: Inserting error_adapter: error_adapter_0
+Info: avalon_st_adapter_007: Inserting error_adapter: error_adapter_0
+Info: mm_interconnect_0: "wasca" instantiated altera_mm_interconnect "mm_interconnect_0"
+Info: irq_mapper: "wasca" instantiated altera_irq_mapper "irq_mapper"
+Info: rst_controller: "wasca" instantiated altera_reset_controller "rst_controller"
+Info: cpu: Starting RTL generation for module 'wasca_nios2_gen2_0_cpu'
+Info: cpu:   Generation command is [exec D:/altera/15.1/quartus/bin64//eperlcmd.exe -I D:/altera/15.1/quartus/bin64//perl/lib -I D:/altera/15.1/quartus/sopc_builder/bin/europa -I D:/altera/15.1/quartus/sopc_builder/bin/perl_lib -I D:/altera/15.1/quartus/sopc_builder/bin -I D:/altera/15.1/quartus/../ip/altera/nios2_ip/altera_nios2_gen2/cpu_lib -I D:/altera/15.1/quartus/../ip/altera/nios2_ip/altera_nios2_gen2/nios_lib -I D:/altera/15.1/quartus/../ip/altera/nios2_ip/altera_nios2_gen2 -I D:/altera/15.1/quartus/../ip/altera/nios2_ip/altera_nios2_gen2 -- D:/altera/15.1/quartus/../ip/altera/nios2_ip/altera_nios2_gen2/generate_rtl.epl --name=wasca_nios2_gen2_0_cpu --dir=C:/Users/user/AppData/Local/Temp/alt6993_3993798799495130853.dir/0011_cpu_gen/ --quartus_bindir=D:/altera/15.1/quartus/bin64/ --verilog --config=C:/Users/user/AppData/Local/Temp/alt6993_3993798799495130853.dir/0011_cpu_gen//wasca_nios2_gen2_0_cpu_processor_configuration.pl  --do_build_sim=0  ]
+Info: cpu: # 2016.07.11 11:12:07 (*) Starting Nios II generation
+Info: cpu: # 2016.07.11 11:12:07 (*)   Checking for plaintext license.
+Info: cpu: # 2016.07.11 11:12:07 (*)   Plaintext license not found.
+Info: cpu: # 2016.07.11 11:12:07 (*)   No license required to generate encrypted Nios II/e.
+Info: cpu: # 2016.07.11 11:12:07 (*)   Elaborating CPU configuration settings
+Info: cpu: # 2016.07.11 11:12:08 (*)   Creating all objects for CPU
+Info: cpu: # 2016.07.11 11:12:10 (*)   Generating RTL from CPU objects
+Info: cpu: # 2016.07.11 11:12:10 (*)   Creating plain-text RTL
+Info: cpu: # 2016.07.11 11:12:12 (*) Done Nios II generation
+Info: cpu: Done RTL generation for module 'wasca_nios2_gen2_0_cpu'
+Info: cpu: "nios2_gen2_0" instantiated altera_nios2_gen2_unit "cpu"
+Info: sega_saturn_abus_slave_0_avalon_master_translator: "mm_interconnect_0" instantiated altera_merlin_master_translator "sega_saturn_abus_slave_0_avalon_master_translator"
+Info: external_sdram_controller_s1_translator: "mm_interconnect_0" instantiated altera_merlin_slave_translator "external_sdram_controller_s1_translator"
+Info: sega_saturn_abus_slave_0_avalon_master_agent: "mm_interconnect_0" instantiated altera_merlin_master_agent "sega_saturn_abus_slave_0_avalon_master_agent"
+Info: external_sdram_controller_s1_agent: "mm_interconnect_0" instantiated altera_merlin_slave_agent "external_sdram_controller_s1_agent"
+Info: external_sdram_controller_s1_agent_rsp_fifo: "mm_interconnect_0" instantiated altera_avalon_sc_fifo "external_sdram_controller_s1_agent_rsp_fifo"
+Info: router: "mm_interconnect_0" instantiated altera_merlin_router "router"
+Info: router_001: "mm_interconnect_0" instantiated altera_merlin_router "router_001"
+Info: router_002: "mm_interconnect_0" instantiated altera_merlin_router "router_002"
+Info: router_003: "mm_interconnect_0" instantiated altera_merlin_router "router_003"
+Info: router_004: "mm_interconnect_0" instantiated altera_merlin_router "router_004"
+Info: router_007: "mm_interconnect_0" instantiated altera_merlin_router "router_007"
+Info: router_008: "mm_interconnect_0" instantiated altera_merlin_router "router_008"
+Info: external_sdram_controller_s1_burst_adapter: "mm_interconnect_0" instantiated altera_merlin_burst_adapter "external_sdram_controller_s1_burst_adapter"
+Info: cmd_demux: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "cmd_demux"
+Info: cmd_demux_001: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "cmd_demux_001"
+Info: cmd_demux_002: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "cmd_demux_002"
+Info: cmd_mux: "mm_interconnect_0" instantiated altera_merlin_multiplexer "cmd_mux"
+Info: cmd_mux_001: "mm_interconnect_0" instantiated altera_merlin_multiplexer "cmd_mux_001"
+Info: Reusing file D:/cpld/wasca/fpga_firmware/wasca/synthesis/submodules/altera_merlin_arbitrator.sv
+Info: cmd_mux_004: "mm_interconnect_0" instantiated altera_merlin_multiplexer "cmd_mux_004"
+Info: Reusing file D:/cpld/wasca/fpga_firmware/wasca/synthesis/submodules/altera_merlin_arbitrator.sv
+Info: cmd_mux_005: "mm_interconnect_0" instantiated altera_merlin_multiplexer "cmd_mux_005"
+Info: Reusing file D:/cpld/wasca/fpga_firmware/wasca/synthesis/submodules/altera_merlin_arbitrator.sv
+Info: rsp_demux: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "rsp_demux"
+Info: rsp_demux_001: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "rsp_demux_001"
+Info: rsp_demux_004: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "rsp_demux_004"
+Info: rsp_demux_006: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "rsp_demux_006"
+Info: rsp_mux: "mm_interconnect_0" instantiated altera_merlin_multiplexer "rsp_mux"
+Info: Reusing file D:/cpld/wasca/fpga_firmware/wasca/synthesis/submodules/altera_merlin_arbitrator.sv
+Info: rsp_mux_001: "mm_interconnect_0" instantiated altera_merlin_multiplexer "rsp_mux_001"
+Info: Reusing file D:/cpld/wasca/fpga_firmware/wasca/synthesis/submodules/altera_merlin_arbitrator.sv
+Info: rsp_mux_002: "mm_interconnect_0" instantiated altera_merlin_multiplexer "rsp_mux_002"
+Info: Reusing file D:/cpld/wasca/fpga_firmware/wasca/synthesis/submodules/altera_merlin_arbitrator.sv
+Info: nios2_gen2_0_data_master_to_external_sdram_controller_s1_cmd_width_adapter: "mm_interconnect_0" instantiated altera_merlin_width_adapter "nios2_gen2_0_data_master_to_external_sdram_controller_s1_cmd_width_adapter"
+Info: Reusing file D:/cpld/wasca/fpga_firmware/wasca/synthesis/submodules/altera_merlin_address_alignment.sv
+Info: Reusing file D:/cpld/wasca/fpga_firmware/wasca/synthesis/submodules/altera_merlin_burst_uncompressor.sv
+Info: crosser: "mm_interconnect_0" instantiated altera_avalon_st_handshake_clock_crosser "crosser"
+Info: Reusing file D:/cpld/wasca/fpga_firmware/wasca/synthesis/submodules/altera_avalon_st_pipeline_base.v
+Info: avalon_st_adapter: "mm_interconnect_0" instantiated altera_avalon_st_adapter "avalon_st_adapter"
+Info: avalon_st_adapter_001: "mm_interconnect_0" instantiated altera_avalon_st_adapter "avalon_st_adapter_001"
+Info: error_adapter_0: "avalon_st_adapter" instantiated error_adapter "error_adapter_0"
+Info: error_adapter_0: "avalon_st_adapter_001" instantiated error_adapter "error_adapter_0"
+Info: wasca: Done "wasca" with 46 modules, 78 files
+Info: qsys-generate succeeded.
+Info: Finished: Create HDL design files for synthesis

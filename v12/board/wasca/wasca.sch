@@ -90,7 +90,7 @@ $Descr A1 33110 23386
 encoding utf-8
 Sheet 1 1
 Title "Wasca"
-Date "2016-07-08"
+Date "2016-07-11"
 Rev "1.2"
 Comp "cafe-alpha & hitomi2500"
 Comment1 ""
@@ -675,9 +675,9 @@ Text Label 12450 11450 0    40   ~ 0
 ABUS_3V_MUX1
 Text Label 12450 11550 0    40   ~ 0
 ABUS_3V_MUX0
-Text Label 22650 6100 0    40   ~ 0
+Text Label 22650 6000 0    40   ~ 0
 ABUS_3V_MUX12
-Text Label 22650 5800 0    40   ~ 0
+Text Label 22650 5700 0    40   ~ 0
 ABUS_3V_MUX13
 Text Label 22650 5600 0    40   ~ 0
 ABUS_3V_MUX14
@@ -760,9 +760,9 @@ Text Label 11900 10350 0    40   ~ 0
 +3_3V
 Text Label 11900 6400 0    40   ~ 0
 +3_3V
-Text Label 23200 6000 2    40   ~ 0
+Text Label 23200 5800 2    40   ~ 0
 ABUS_3V_MUX_EN1
-Text Label 22650 6200 0    40   ~ 0
+Text Label 22650 6100 0    40   ~ 0
 ABUS_3V_MUX_EN2
 Text Label 23150 4600 2    40   ~ 0
 ABUS_3V_MUX_DATA_DIR
@@ -955,7 +955,7 @@ Text Label 28000 4800 0    40   ~ 0
 ABUS_3V_WR0
 Text Label 28000 5800 0    40   ~ 0
 ABUS_3V_A17
-Text Label 22650 5700 0    40   ~ 0
+Text Label 22650 6200 0    40   ~ 0
 SCSPCLK_3V
 Text Label 28000 5600 0    40   ~ 0
 ABUS_3V_A16
@@ -2071,8 +2071,6 @@ F 3 "" H 25600 7600 60  0000 C CNN
 	1    25600 7600
 	1    0    0    -1  
 $EndComp
-Text Notes 18200 7550 0    60   ~ 0
-(4.7 uF capacitor soldered\ndirectly on SD card socket)
 NoConn ~ 18500 6200
 NoConn ~ 18500 7000
 NoConn ~ 16700 6350
@@ -2362,82 +2360,82 @@ $EndComp
 $Comp
 L CONN_02X05 X2
 U 1 1 57785682
-P 26000 12600
-F 0 "X2" H 26000 12900 50  0000 C CNN
-F 1 "CONN_02X05" H 26000 12300 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_2x05" H 26000 11400 50  0001 C CNN
-F 3 "" H 26000 11400 50  0000 C CNN
-	1    26000 12600
+P 29100 14600
+F 0 "X2" H 29100 14900 50  0000 C CNN
+F 1 "CONN_02X05" H 29100 14300 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x05" H 29100 13400 50  0001 C CNN
+F 3 "" H 29100 13400 50  0000 C CNN
+	1    29100 14600
 	1    0    0    -1  
 $EndComp
 $Comp
 L CONN_02X05 X3
 U 1 1 57786005
-P 26000 11200
-F 0 "X3" H 26000 11500 50  0000 C CNN
-F 1 "CONN_02X05" H 26000 10900 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_2x05" H 26000 10000 50  0001 C CNN
-F 3 "" H 26000 10000 50  0000 C CNN
-	1    26000 11200
+P 29100 13500
+F 0 "X3" H 29100 13800 50  0000 C CNN
+F 1 "CONN_02X05" H 29100 13200 50  0000 C CNN
+F 2 "Pin_Headers:Pin_Header_Straight_2x05" H 29100 12300 50  0001 C CNN
+F 3 "" H 29100 12300 50  0000 C CNN
+	1    29100 13500
 	1    0    0    -1  
 $EndComp
-Text Label 24700 11100 0    40   ~ 0
+Text Label 27800 13400 0    40   ~ 0
 USB_CS
-Text Label 27300 11100 2    40   ~ 0
+Text Label 30400 13400 2    40   ~ 0
 USB_RD
-Text Label 27300 11000 2    40   ~ 0
+Text Label 30400 13300 2    40   ~ 0
 USB_SPARE2
 Text Label 22150 6600 0    40   ~ 0
 USB_SPARE2
-Text Label 27300 11200 2    40   ~ 0
+Text Label 30400 13500 2    40   ~ 0
 USB_SPARE1
 $Comp
 L GND #PWR067
 U 1 1 57788E1D
-P 25550 11650
-F 0 "#PWR067" H 25550 11400 50  0001 C CNN
-F 1 "GND" H 25550 11500 50  0001 C CNN
-F 2 "" H 25550 11650 60  0000 C CNN
-F 3 "" H 25550 11650 60  0000 C CNN
-	1    25550 11650
+P 28650 13950
+F 0 "#PWR067" H 28650 13700 50  0001 C CNN
+F 1 "GND" H 28650 13800 50  0001 C CNN
+F 2 "" H 28650 13950 60  0000 C CNN
+F 3 "" H 28650 13950 60  0000 C CNN
+	1    28650 13950
 	1    0    0    -1  
 $EndComp
-Text Label 27350 12400 2    40   ~ 0
+Text Label 30450 14400 2    40   ~ 0
 +5V
-Text Label 24700 12500 0    40   ~ 0
+Text Label 27800 14500 0    40   ~ 0
 ABUS_D3
-Text Label 27350 12500 2    40   ~ 0
+Text Label 30450 14500 2    40   ~ 0
 ABUS_D2
-Text Label 24700 12600 0    40   ~ 0
+Text Label 27800 14600 0    40   ~ 0
 ABUS_D1
-Text Label 27350 12600 2    40   ~ 0
+Text Label 30450 14600 2    40   ~ 0
 ABUS_D0
-Text Label 24700 12700 0    40   ~ 0
+Text Label 27800 14700 0    40   ~ 0
 ABUS_A1
-Text Label 27350 12700 2    40   ~ 0
+Text Label 30450 14700 2    40   ~ 0
 ABUS_D4
-Text Label 24700 12800 0    40   ~ 0
+Text Label 27800 14800 0    40   ~ 0
 ABUS_D5
-Text Label 27350 12800 2    40   ~ 0
+Text Label 30450 14800 2    40   ~ 0
 ABUS_D6
-Text Label 24700 11300 0    40   ~ 0
+Text Label 27800 13600 0    40   ~ 0
 ABUS_A0
-Text Label 24700 11400 0    40   ~ 0
+Text Label 27800 13700 0    40   ~ 0
 ABUS_D7
-Text Label 27300 11300 2    40   ~ 0
+Text Label 30400 13600 2    40   ~ 0
 ABUS_A2
 $Comp
 L GND #PWR068
 U 1 1 5778F5BB
-P 26400 11650
-F 0 "#PWR068" H 26400 11400 50  0001 C CNN
-F 1 "GND" H 26400 11500 50  0001 C CNN
-F 2 "" H 26400 11650 60  0000 C CNN
-F 3 "" H 26400 11650 60  0000 C CNN
-	1    26400 11650
+P 29500 13950
+F 0 "#PWR068" H 29500 13700 50  0001 C CNN
+F 1 "GND" H 29500 13800 50  0001 C CNN
+F 2 "" H 29500 13950 60  0000 C CNN
+F 3 "" H 29500 13950 60  0000 C CNN
+	1    29500 13950
 	-1   0    0    -1  
 $EndComp
-Text Label 24650 12400 0    40   ~ 0
+Text Label 27750 14400 0    40   ~ 0
 +3_3V
 $Comp
 L LED LEDR2
@@ -2489,68 +2487,16 @@ F 3 "" H 29650 6800 50  0000 C CNN
 $EndComp
 Text Label 29200 6850 0    40   ~ 0
 DDR_SPARE2
-$Comp
-L CONN_01X01 TP1
-U 1 1 577A153C
-P 7550 4850
-F 0 "TP1" H 7550 4950 50  0000 C CNN
-F 1 "CONN_01X01" H 7550 4750 50  0001 C CNN
-F 2 "wasca:TEST_PAD" H 7550 4850 50  0001 C CNN
-F 3 "" H 7550 4850 50  0000 C CNN
-	1    7550 4850
-	1    0    0    -1  
-$EndComp
-Text Label 6600 4850 0    40   ~ 0
-ABUS_WAIT
-$Comp
-L CONN_01X01 TP3
-U 1 1 577A3064
-P 7550 5350
-F 0 "TP3" H 7550 5450 50  0000 C CNN
-F 1 "CONN_01X01" H 7550 5250 50  0001 C CNN
-F 2 "wasca:TEST_PAD" H 7550 5350 50  0001 C CNN
-F 3 "" H 7550 5350 50  0000 C CNN
-	1    7550 5350
-	1    0    0    -1  
-$EndComp
-Text Label 6600 5350 0    40   ~ 0
-ABUS_TIM0
-$Comp
-L CONN_01X01 TP2
-U 1 1 577A3586
-P 7550 5100
-F 0 "TP2" H 7550 5200 50  0000 C CNN
-F 1 "CONN_01X01" H 7550 5000 50  0001 C CNN
-F 2 "wasca:TEST_PAD" H 7550 5100 50  0001 C CNN
-F 3 "" H 7550 5100 50  0000 C CNN
-	1    7550 5100
-	1    0    0    -1  
-$EndComp
-Text Label 6600 5100 0    40   ~ 0
-ABUS_FC0
 Text Label 3450 7700 0    40   ~ 0
 ABUS_FC0
 Text Label 3450 7800 0    40   ~ 0
 ABUS_TIM0
 Text Label 5600 7700 0    40   ~ 0
 ABUS_FC1
-$Comp
-L CONN_01X01 TP4
-U 1 1 577A5DAC
-P 7550 5600
-F 0 "TP4" H 7550 5700 50  0000 C CNN
-F 1 "CONN_01X01" H 7550 5500 50  0001 C CNN
-F 2 "wasca:TEST_PAD" H 7550 5600 50  0001 C CNN
-F 3 "" H 7550 5600 50  0000 C CNN
-	1    7550 5600
-	1    0    0    -1  
-$EndComp
-Text Label 6600 5600 0    40   ~ 0
-ABUS_FC1
 Text Notes 17850 10300 0    39   ~ 0
-SDRAM : share 3V3 with MAX10\nDDR : requires 2V5 power supply
+SDRAM : shares 3V3 with MAX10\nDDR : requires 2V5 power supply
 Text Notes 28450 21400 0    60   ~ 0
---- Changelog ---\nV1.0 hitomi2500 :\n - Initial version with 10M04SFE, SDRAM, FT201XS\nV1.1 hitomi2500 :\n - Both DDR/SDRAM support\n - Added USB and bluetooth support\n - Sound I/O mapped to MAX10\nV1.2 cafe-alpha :\n - Changed PCB shape and ICs position in order to fit Action Replay case\n - Changed MAX10 chip from 10M04SFE to 10M08SCE\n - Changed SD card footprint to the ones I used in Gamer's Cartridge\n - Removed DDR and bluetooth support\n - Removed USB and bluetooth modules\n - Added USB dev cart support via separate (optional) mezzanine board\n
+--- Changelog ---\nV1.0 hitomi2500 :\n - Initial version with 10M04SFE, SDRAM, FT201XS\nV1.1 hitomi2500 :\n - Both DDR/SDRAM support\n - Added USB and bluetooth support\n - Sound I/O mapped to MAX10\nV1.2 cafe-alpha :\n - Changed PCB shape and ICs position in order to fit Action Replay case\n - Changed MAX10 chip from 10M04SFE to 10M08SCE\n - Changed SD card footprint to the one used in Gamer's Cartridge\n - Removed DDR and bluetooth support\n - Removed USB and bluetooth modules\n - Added USB dev cart support via separate (optional) mezzanine board\n
 NoConn ~ 20850 5100
 NoConn ~ 20850 5200
 NoConn ~ 21100 5200
@@ -4167,11 +4113,11 @@ Wire Wire Line
 	25350 14650 25250 14650
 Connection ~ 25250 14650
 Wire Wire Line
-	27350 11100 26250 11100
+	30450 13400 29350 13400
 Wire Wire Line
-	24650 11100 25750 11100
+	27750 13400 28850 13400
 Wire Wire Line
-	27350 11000 26250 11000
+	30450 13300 29350 13300
 Wire Wire Line
 	22100 6600 23200 6600
 Wire Notes Line
@@ -4181,44 +4127,44 @@ Wire Notes Line
 Wire Notes Line
 	21700 6200 21700 6650
 Wire Wire Line
-	27350 11200 26250 11200
+	30450 13500 29350 13500
 Wire Wire Line
-	25550 11000 25550 11650
+	28650 13300 28650 13950
 Wire Wire Line
-	25750 11000 25550 11000
+	28850 13300 28650 13300
 Wire Wire Line
-	26250 12400 27350 12400
+	29350 14400 30450 14400
 Wire Wire Line
-	24650 12500 25750 12500
+	27750 14500 28850 14500
 Wire Wire Line
-	26250 12500 27350 12500
+	29350 14500 30450 14500
 Wire Wire Line
-	24650 12600 25750 12600
+	27750 14600 28850 14600
 Wire Wire Line
-	26250 12600 27350 12600
+	29350 14600 30450 14600
 Wire Wire Line
-	24650 12700 25750 12700
+	27750 14700 28850 14700
 Wire Wire Line
-	26250 12700 27350 12700
+	29350 14700 30450 14700
 Wire Wire Line
-	24650 12800 25750 12800
+	27750 14800 28850 14800
 Wire Wire Line
-	26250 12800 27350 12800
+	29350 14800 30450 14800
 Wire Wire Line
-	24650 11300 25750 11300
+	27750 13600 28850 13600
 Wire Wire Line
-	24650 11400 25750 11400
+	27750 13700 28850 13700
 Wire Wire Line
-	27350 11300 26250 11300
+	30450 13600 29350 13600
 Wire Wire Line
-	26250 11400 26400 11400
+	29350 13700 29500 13700
 Wire Wire Line
-	25750 12400 24650 12400
+	28850 14400 27750 14400
 Wire Wire Line
-	26400 11400 26400 11650
+	29500 13700 29500 13950
 Wire Wire Line
-	25750 11200 25550 11200
-Connection ~ 25550 11200
+	28850 13500 28650 13500
+Connection ~ 28650 13500
 Wire Wire Line
 	29850 7100 29200 7100
 Wire Wire Line
@@ -4230,19 +4176,11 @@ Wire Wire Line
 Wire Wire Line
 	29200 6850 29450 6850
 Wire Wire Line
-	6600 4850 7350 4850
-Wire Wire Line
-	6600 5350 7350 5350
-Wire Wire Line
-	6600 5100 7350 5100
-Wire Wire Line
 	3250 7800 4000 7800
 Wire Wire Line
 	3250 7700 4000 7700
 Wire Wire Line
 	5350 7700 6100 7700
-Wire Wire Line
-	6600 5600 7350 5600
 Wire Wire Line
 	18250 9400 18250 10050
 Wire Wire Line
@@ -4312,4 +4250,14 @@ Wire Notes Line
 Connection ~ 28850 10200
 Wire Wire Line
 	28850 10700 28850 10650
+Wire Notes Line
+	27300 12800 27300 15250
+Wire Notes Line
+	27300 15250 30850 15250
+Wire Notes Line
+	30850 15250 30850 12800
+Wire Notes Line
+	30850 12800 27300 12800
+Text Notes 28350 12950 0    60   ~ 0
+Connection with USB mezzanine board
 $EndSCHEMATC
