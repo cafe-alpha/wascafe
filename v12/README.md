@@ -23,3 +23,4 @@ Pictures :
 ![image](https://github.com/cafe-alpha/wascafe/blob/master/v12/pictures/revw12b_front_solder.jpg)
 ![image](https://github.com/cafe-alpha/wascafe/blob/master/v12/pictures/max10_board_front.png)
 ![image](https://github.com/cafe-alpha/wascafe/blob/master/v12/pictures/max10_board_rear.png)
+![image](https://github.com/cafe-alpha/wascafe/blob/master/v12/pictures/revw12c_open.jpg)
