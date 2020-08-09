@@ -1,0 +1,9 @@
+// Generated: 2019/12/17,  9:02
+#ifndef M10_VER_INFOS_H
+#define M10_VER_INFOS_H
+#define MAX10_FWDT_STR  "201912170902"
+#define MAX10_FWDT_VAL  20191217
+#define MAX10_FWTM_VAL  10902
+#define MAX10_DEV_TYPE  "10M08SCE144C8G"
+#define MAX10_PROJ_NAME "wasca_10m08sc_20191205_abus_divide"
+#endif // M10_VER_INFOS_H
