@@ -19,9 +19,9 @@
  5. Type "rb" and enter to rebuild NIOS part of the firmware
 
 ## Pictures :
-![image](https://github.com/cafe-alpha/wascafe/blob/master/v13/20181022_wasca_xrider.jpg)
-![image](https://github.com/cafe-alpha/wascafe/blob/master/v13/20190405_wasca_almost_signature.jpg)
-![image](https://github.com/cafe-alpha/wascafe/blob/master/v13/20191211_chuntest_8b.jpg)
+![image](https://github.com/cafe-alpha/wascafe/blob/master/v13/pictures/20181022_wasca_xrider.jpg)
+![image](https://github.com/cafe-alpha/wascafe/blob/master/v13/pictures/20190405_wasca_almost_signature.jpg)
+![image](https://github.com/cafe-alpha/wascafe/blob/master/v13/pictures/20191211_chuntest_8b.jpg)
 
 More pictures and informations available on [my Saturn cartridges gallery](https://ppcenter.webou.net/satcart/gallery/#revw13).
 
