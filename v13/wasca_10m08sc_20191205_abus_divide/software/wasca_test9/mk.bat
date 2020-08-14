@@ -87,6 +87,7 @@ goto start
 :do_rebuild
 
 @REM Update informations about PL build time, device type and project name in header file
+If not "%pl_dt:~0,3%" == "202" goto skip_header_gen
 echo // Generated: %date:~0,4%/%date:~5,2%/%date:~8,2%, %time:~0,2%:%time:~3,2%> m10_ver_infos.h
 echo #ifndef M10_VER_INFOS_H>> m10_ver_infos.h
 echo #define M10_VER_INFOS_H>> m10_ver_infos.h
@@ -96,8 +97,12 @@ echo #define MAX10_FWTM_VAL  1%pl_dt:~8,4%>> m10_ver_infos.h
 echo #define MAX10_DEV_TYPE  "%dev_line:~9,14%">> m10_ver_infos.h
 echo #define MAX10_PROJ_NAME "%pj_design_name%">> m10_ver_infos.h
 echo #endif // M10_VER_INFOS_H>> m10_ver_infos.h
+:skip_header_gen
 
 cat m10_ver_infos.h
+
+@REM Update wasca link definition header if it is available.
+if exist D:\dev\Saturn\SatCom\satlink\wasca\wasca_link.h copy /Y D:\dev\Saturn\SatCom\satlink\wasca\wasca_link.h satcom_lib\wasca_link.h
 
 call %quartus_path%\nios2eds\"Nios II Command Shell.bat" ./rebuild_all.sh
 goto start

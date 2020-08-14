@@ -73,6 +73,9 @@ goto start
 
 
 :do_rebuild
+@REM Update wasca link definition header if it is available.
+if exist D:\dev\Saturn\SatCom\satlink\wasca\wasca_link.h copy /Y D:\dev\Saturn\SatCom\satlink\wasca\wasca_link.h satcom_lib\wasca_link.h
+
 call %quartus_path%\nios2eds\"Nios II Command Shell.bat" ./rebuild_all.sh
 goto start
 

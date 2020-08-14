@@ -2,9 +2,6 @@
 #
 # Rebuild everything.
 
-# Copy wasca link definition header
-cp -p /cygdrive/d/dev/Saturn/SatCom/satlink/wasca/wasca_link.h satcom_lib/wasca_link.h
-
 # Rebuild BSP
 cd ../wasca_test9_bsp/
 
