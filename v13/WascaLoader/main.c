@@ -867,10 +867,11 @@ void _main(void)
                 menu_add_item(mitems, "    Start Pseud", 20/*tag*/);
                 menu_add_item(mitems, "o Saturn Kai   ", 20/*tag*/);
 #endif
+
+                menu_add_item(mitems, "   Mini Pseudo ",  90/*tag*/);
+                menu_add_item(mitems, "Saturn Loader  ",  90/*tag*/);
             }
 
-            menu_add_item(mitems, "   Mini Pseudo ",  90/*tag*/);
-            menu_add_item(mitems, "Saturn Loader  ",  90/*tag*/);
             menu_add_item(mitems, " System Reset  ",  98/*tag*/);
             menu_add_item(mitems, "  Multiplayer  ",  99/*tag*/);
         }
