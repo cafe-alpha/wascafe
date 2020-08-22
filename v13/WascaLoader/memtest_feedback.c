@@ -23,37 +23,51 @@
 /* Display error log on screen.
  * Purpose : easily trace memory errors.
  */
-int _feedback_line_id = 0;
+int _feedback_error_id = 0;
+int _feedback_error_scroll = 0;
 void memtest_error_feedback_func(void* addr, unsigned long write_data, unsigned long read_data, int width, unsigned short code, unsigned long err_cnt)
 {
-    if(_feedback_line_id < 12)
-    {
-        int row = 13 + _feedback_line_id;
-        conio_printf(2, row, COLOR_YELLOW, "A:         WR:         RD:        ");
+    const int start_row = 13;
+    const int row_count = 12;
 
-        conio_printf(4, row, COLOR_WHITE, "%08X", addr);
-        if(width == 8)
-        {
-            conio_printf(16+6, row, COLOR_WHITE, "%02X", write_data);
-            conio_printf(28+6, row, COLOR_WHITE, "%02X", read_data);
-        }
-        else if(width == 16)
-        {
-            conio_printf(16+4, row, COLOR_WHITE, "%04X", write_data);
-            conio_printf(28+4, row, COLOR_WHITE, "%04X", read_data);
-        }
-        else if(width == 32)
-        {
-            conio_printf(16+0, row, COLOR_WHITE, "%08X", write_data);
-            conio_printf(28+0, row, COLOR_WHITE, "%08X", read_data);
-        }
-        _feedback_line_id++;
-    }
-    else
+    /* Display only first errors when scrolling is disabled. */
+    if((!_feedback_error_scroll)
+    && ((_feedback_error_id+1) > row_count))
     {
-        /* Overwrite previous lines. */
-        //_feedback_line_id  = 0;
+        return;
     }
+
+    if((_feedback_error_id+1) > row_count)
+    {
+        int i;
+        for(i=1; i<row_count; i++)
+        {
+            conio_line_scroll_up(start_row + i);
+        }
+    }
+
+    int row = start_row + (_feedback_error_id >= row_count ? row_count-1 : _feedback_error_id);
+    conio_printf(2, row, COLOR_YELLOW, "A:         WR:         RD:        ");
+
+    conio_printf(4, row, COLOR_WHITE, "%08X", addr);
+
+    if(width == 8)
+    {
+        conio_printf(16+6, row, COLOR_WHITE, "%02X", write_data);
+        conio_printf(28+6, row, COLOR_WHITE, "%02X", read_data);
+    }
+    else if(width == 16)
+    {
+        conio_printf(16+4, row, COLOR_WHITE, "%04X", write_data);
+        conio_printf(28+4, row, COLOR_WHITE, "%04X", read_data);
+    }
+    else if(width == 32)
+    {
+        conio_printf(16+0, row, COLOR_WHITE, "%08X", write_data);
+        conio_printf(28+0, row, COLOR_WHITE, "%08X", read_data);
+    }
+
+    _feedback_error_id++;
 }
 
 /* Write something to CS1 when memory test error happened, and then display
@@ -156,7 +170,13 @@ int memtest_feedback(void)
     }
 
     /* Reset display of access error. */
-    _feedback_line_id = 0;
+    _feedback_error_id = 0;
+
+    /* Scroll error display only during infinite test.
+     *  - Fixed count test = it's important to remember first errors.
+     *  - Infnite test = retro screen saver !
+     */
+    _feedback_error_scroll = (test_cnt == TEST_COUNT_INFINITE ? 1 : 0);
 
     unsigned long total_err_cnt = 0;
     int test_id;

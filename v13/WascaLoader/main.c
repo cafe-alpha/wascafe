@@ -449,15 +449,15 @@ unsigned char cartram_init_test(int cs)
         menu_reset_settings(mset);
         menu_reset_items(mitems);
         menu_set_title(mset, "CartRam Setup");
-        menu_add_item(mitems, "Config & Test"   ,  0/*tag*/);
-        menu_add_item(mitems, "MemTest Only"    ,  1/*tag*/);
-        menu_add_item(mitems, "SIZE: 16 bits"   ,  2/*tag*/);
-        menu_add_item(mitems, "SIZE: 32 bits"   ,  3/*tag*/);
-        menu_add_item(mitems, "FFh pre-fill"    ,  4/*tag*/);
-        menu_add_item(mitems, "00h pre-fill"    ,  5/*tag*/);
-        menu_add_item(mitems, "- Region Test -" ,  6/*tag*/);
-        menu_add_item(mitems, "- ChunkTest -"   ,  7/*tag*/);
-        menu_add_item(mitems, "- FeedbackTest -",  8/*tag*/);
+        menu_add_item(mitems, "Config & Test"    ,  0/*tag*/);
+        menu_add_item(mitems, "MemTest Only"     ,  1/*tag*/);
+        menu_add_item(mitems, "SIZE: 16 bits"    ,  2/*tag*/);
+        menu_add_item(mitems, "SIZE: 32 bits"    ,  3/*tag*/);
+        menu_add_item(mitems, "FFh pre-fill"     ,  4/*tag*/);
+        menu_add_item(mitems, "00h pre-fill"     ,  5/*tag*/);
+        menu_add_item(mitems, "- Region Test -"  ,  6/*tag*/);
+        menu_add_item(mitems, "- Chunk Test -"   ,  7/*tag*/);
+        menu_add_item(mitems, "- Feedback Test -",  8/*tag*/);
 
         menu_set_callback_vblank(mset, menu_vblank_clbk);
         menu_set_pos(mset, -1/*x0*/, MENU_TOP_ROW/*y0*/, 18/*w*/, 10/*h*/, 1/*cols*/);
