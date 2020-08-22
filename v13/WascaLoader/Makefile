@@ -17,6 +17,7 @@ LD	=	$(CONF_VERBOSE)$(CONF_SH_ELF)gcc
 AS	=	$(CONF_VERBOSE)$(CONF_SH_ELF)as
 LDFLAGS =	$(CONF_LDFLAGS)
 FLAGS	=	$(CONF_FLAGS)
+FLAGS_F0	=	$(CONF_FLAGS_F0)
 MKDIR	=	@-$(CONF_LIBPATH)tools/my_mkdir.exe
 RM	=	@-$(CONF_LIBPATH)tools/my_del.exe
 COMP	=	@-$(CONF_LIBPATH)tools/comp.exe
@@ -48,6 +49,12 @@ $(EXE)	:	$(OBJ) $(PSKAIOBJ) $(LIBOBJ)
 		$(MKDIR) $(dir $(EXE))
 		$(RM) $(EXE)
 		$(LD) $(OBJ) $(PSKAIOBJ) $(LIBOBJ) $(LDFLAGS) -L$(CONF_LGCC_PATH) -lc -lgcc -o $(EXE)
+
+obj/memtest_feedback.c.o :	memtest_feedback.c
+		@echo "Processing f0 $< ..."
+		$(MKDIR) $(dir $@)
+		$(RM) $@ $(EXE)
+		$(CC) -c $< -o $@ $(FLAGS_F0)
 
 obj/%.c.o :	%.c
 		@echo "Processing $< ..."

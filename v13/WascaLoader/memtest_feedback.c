@@ -14,16 +14,61 @@
 /* Inclusion of some globals and constants. */
 #include "memtest_normal.h"
 
-#include "memtest_chunk.h"
+#include "memtest_feedback.h"
 #include "shared.h"
 
 #include "../menu.h"
 
 
-int _chunk_test_menuid = 1;
-int _chunk_test_cs     = 0;
+/* Display error log on screen.
+ * Purpose : easily trace memory errors.
+ */
+int _feedback_line_id = 0;
+void memtest_error_feedback_func(void* addr, unsigned long write_data, unsigned long read_data, int width, unsigned short code, unsigned long err_cnt)
+{
+    if(_feedback_line_id < 12)
+    {
+        int row = 13 + _feedback_line_id;
+        conio_printf(2, row, COLOR_YELLOW, "A:         WR:         RD:        ");
 
-int memtest_chunk(void)
+        conio_printf(4, row, COLOR_WHITE, "%08X", addr);
+        if(width == 8)
+        {
+            conio_printf(16+6, row, COLOR_WHITE, "%02X", write_data);
+            conio_printf(28+6, row, COLOR_WHITE, "%02X", read_data);
+        }
+        else if(width == 16)
+        {
+            conio_printf(16+4, row, COLOR_WHITE, "%04X", write_data);
+            conio_printf(28+4, row, COLOR_WHITE, "%04X", read_data);
+        }
+        else if(width == 32)
+        {
+            conio_printf(16+0, row, COLOR_WHITE, "%08X", write_data);
+            conio_printf(28+0, row, COLOR_WHITE, "%08X", read_data);
+        }
+        _feedback_line_id++;
+    }
+    else
+    {
+        /* Overwrite previous lines. */
+        //_feedback_line_id  = 0;
+    }
+}
+
+/* Write something to CS1 when memory test error happened, and then display
+ * error log to screen.
+ *
+ * The purpose of using a macro is to trigger as fast as possible so
+ * that SignalTap can capture something relevant.
+ */
+#define MEMTEST_ERROR_FEEDBACK(_ADDR_, _WRITE_DATA_, _READ_DATA_, _WIDTH_, _CODE_, _ERR_CNT_) ((unsigned short*)0x24000000)[0] = (_CODE_) | ((_ERR_CNT_) & 0x00000FFF); memtest_error_feedback_func(_ADDR_, _WRITE_DATA_, _READ_DATA_, _WIDTH_, _CODE_, _ERR_CNT_)
+
+
+
+int _feedback_test_menuid = 1;
+
+int memtest_feedback(void)
 {
     pad_t* pad;
     menu_settings_t* mset   = &_menu_settings;
@@ -45,7 +90,6 @@ int memtest_chunk(void)
      * - Error count is maxed to 999
      */
 #define CHECK_CHUNKSIZE  (1*1024*1024)
-#define CHECK_CHUNKCOUNT ((16*1024*1024) / CHECK_CHUNKSIZE)
 #define LRAM_LEN (1024*1024)
 
     /* Clear normal (excluding status) display. */
@@ -67,7 +111,8 @@ int memtest_chunk(void)
     }
     else
     {
-        my_CartRAMsize = CHECK_CHUNKSIZE * CHECK_CHUNKCOUNT;
+        /* Consider capacity of unknown expansion memory cart as 4MB. */
+        my_CartRAMsize = 4*1024*1024;
     }
 
     int test_cnt = 0;
@@ -78,7 +123,7 @@ int memtest_chunk(void)
         menu_set_callback_vblank(mset, background_vblank_clbk);
 
         menu_set_help(mset, "A/C: Confirm, B: Cancel");
-        menu_set_title(mset, "Memory Chunk Test");
+        menu_set_title(mset, "Feedback Memory Test");
         menu_set_pos(mset, -1/*x0*/, 4*CONIO_CHAR_H/*y0*/, 21/*w*/, 0/*h*/, 1/*cols*/);
         menu_set_erase_on_exit(mset, 1);
         menu_set_features
@@ -98,67 +143,33 @@ int memtest_chunk(void)
 #define TEST_COUNT_INFINITE 9000
         menu_add_item(mitems, "Infinite Test" , TEST_COUNT_INFINITE/*tag*/);
 
-        if(_chunk_test_cs == 0)
-        {
-            menu_add_item(mitems, "Test on : CS0", 9999/*tag*/);
-        }
-        else
-        {
-            menu_add_item(mitems, "Test on : CS1", 9999/*tag*/);
-        }
-
         clear_screen();
-        _chunk_test_menuid = menu_start(mitems, mset, _chunk_test_menuid/*selected_tag*/);
+        _feedback_test_menuid = menu_start(mitems, mset, _feedback_test_menuid/*selected_tag*/);
 
         if(mset->exit_code == MENU_EXIT_CANCEL)
         {
             return 0;
         }
 
-        if(_chunk_test_menuid == 9999)
-        {
-            /* Toggle CS0/CS1. */
-            _chunk_test_cs = (_chunk_test_cs ? 0 : 1);
-        }
-        else
-        {
-            test_cnt = _chunk_test_menuid;
-            break;
-        }
+        test_cnt = _feedback_test_menuid;
+        break;
     }
+
+    /* Reset display of access error. */
+    _feedback_line_id = 0;
 
     unsigned long total_err_cnt = 0;
     int test_id;
     for(test_id=0; (test_cnt == TEST_COUNT_INFINITE) || (test_id < test_cnt); test_id++)
     {
-        conio_printf(2, 5, COLOR_YELLOW, "CS%u  [AA] [55] [RN] [08] [16] [32]", _chunk_test_cs);
+        conio_printf(2, 5, COLOR_YELLOW, "CS0  [AA] [55] [RN] [08] [16] [32]");
 
         row = 6;
-
         int chunk_id;
-        for(chunk_id=0; chunk_id<CHECK_CHUNKCOUNT; chunk_id++)
+        for(chunk_id=4; chunk_id<8; chunk_id++)
         {
             conio_printf(2, row, COLOR_WHITE, empty_line);
             conio_printf(2, row, COLOR_WHITE, "+%02u", chunk_id);
-
-            /* Skip unavailable memory areas when 4MB expansion RAM is detected.
-             *
-             * Don't care about the 1MB cart because it is arranged into 512KB
-             * blocks, causing troubles here because tests are done 1MB per 1MB.
-             */
-            int skip_test = 0;
-            if((_chunk_test_cs == 0) && (cart_id == 0x5c))
-            {
-                if((chunk_id < 4) || (chunk_id >= 8))
-                {
-                    skip_test = 1;
-                }
-            }
-            if(skip_test)
-            {
-                conio_printf(8, row++, COLOR_WHITE, "--   --   --   --   --   -- ");
-                continue;
-            }
 
             int pass_id;
             for(pass_id=0; pass_id<6; pass_id++)
@@ -172,15 +183,7 @@ int memtest_chunk(void)
                 {
                     sprintf(count_str, "%04u/%04u", test_id+1, test_cnt);
                 }
-
-                if(_chunk_test_cs == 0)
-                {
-                    conio_printf(2, 4, COLOR_LIME , "ID:%02X (%2u MB) t:%s e:%08X", cart_id, my_CartRAMsize>>20, count_str, total_err_cnt);
-                }
-                else
-                {
-                    conio_printf(2, 4, COLOR_LIME , "CS1 TEST      t:%s e:%08X", count_str, total_err_cnt);
-                }
+                conio_printf(2, 4, COLOR_LIME , "ID:%02X (%2u MB) T:%s E:%08X", cart_id, my_CartRAMsize>>20, count_str, total_err_cnt);
 
                 /* Emergency exit with B button. */
                 pad = pad_read();
@@ -192,117 +195,107 @@ int memtest_chunk(void)
 
                 unsigned long err_cnt    = 0;
                 unsigned long ite_total  = 0;
-                unsigned char* lram_ptr  = (unsigned char*)0x00200000;
-                unsigned char* chunk_ptr = (unsigned char*)((_chunk_test_cs == 0 ? 0x22000000 : 0x24000000) + (chunk_id * CHECK_CHUNKSIZE));
+                volatile unsigned char* chunk_ptr = (volatile unsigned char*)(0x22000000 + (chunk_id * CHECK_CHUNKSIZE));
 
                 if((pass_id == 0) || (pass_id == 1))
                 { /* AA/55 write test (32 bits width, continous). */
+                    unsigned short feedback_code = ((pass_id == 0) ? 0xA000 : 0xB000);
                     unsigned long fill_val = ((pass_id == 0) ? 0xAA5555AA : 0x55AAAA55);
                     unsigned long* ptr;
 
                     ptr = (unsigned long*)chunk_ptr;
                     for(i=((CHECK_CHUNKSIZE / sizeof(unsigned long)) - 1); i; i--)
                     {
-                        *ptr++ = fill_val;
-                    }
+                        /* Write. */
+                        *ptr = fill_val;
 
-                    ptr = (unsigned long*)chunk_ptr;
-                    for(i=((CHECK_CHUNKSIZE / sizeof(unsigned long)) - 1); i; i--)
-                    {
-                        if(*ptr++ != fill_val)
+                        /* Verify. */
+                        unsigned long read_val = *ptr;
+                        if(read_val != fill_val)
                         {
+                            MEMTEST_ERROR_FEEDBACK((void*)ptr, fill_val, read_val, 32, feedback_code, total_err_cnt + err_cnt);
                             err_cnt++;
                         }
+
+                        ptr++;
                     }
+
                     ite_total = CHECK_CHUNKSIZE / sizeof(unsigned long);
                 }
                 else if(pass_id == 2)
                 { /* Write random value, then read back and compare. */
 #define REF_LEN ( 512*1024)
-#define RAND_TEST_USE_MEMCPY
-                    unsigned char* ref_ptr = lram_ptr + REF_LEN;
                     for(i=0; i<REF_LEN; i++)
                     {
-                        ref_ptr[i] = (unsigned char)rand();
-                    }
+                        unsigned char r = (unsigned char)rand();
 
+                        /* Write. */
+                        chunk_ptr[i] = r;
 
-#ifdef RAND_TEST_USE_MEMCPY
-                    memcpy(chunk_ptr, ref_ptr, REF_LEN);
-#else
-                    for(i=0; i<REF_LEN; i++)
-                    {
-                        chunk_ptr[i] = ref_ptr[i];
-                    }
-#endif
-
-#ifdef RAND_TEST_USE_MEMCPY
-                    memcpy(lram_ptr, chunk_ptr, REF_LEN);
-#else
-                    for(i=0; i<REF_LEN; i++)
-                    {
-                        lram_ptr[i] = chunk_ptr[i];
-                    }
-#endif
-
-                    for(i=0; i<REF_LEN; i++)
-                    {
-                        if(ref_ptr[i] != lram_ptr[i])
+                        /* Verify. */
+                        unsigned char read_val = chunk_ptr[i];
+                        if(read_val != r)
                         {
+                            MEMTEST_ERROR_FEEDBACK((void*)(chunk_ptr + i), r, read_val, 8, 0xC000, total_err_cnt + err_cnt);
                             err_cnt++;
                         }
                     }
+
                     ite_total = REF_LEN;
                 }
                 else if((pass_id == 3) || (pass_id == 4) || (pass_id == 5))
                 {
+                    unsigned short feedback_code = (0xD + (pass_id-3)) << 12;
                     int byte_cnt = 1 << (pass_id-3);
-                    unsigned char * l8  = (unsigned char *)lram_ptr;
-                    unsigned short* l16 = (unsigned short*)lram_ptr;
-                    unsigned long * l32 = (unsigned long *)lram_ptr;
-                    unsigned char * c8  = (unsigned char *)chunk_ptr;
-                    unsigned short* c16 = (unsigned short*)chunk_ptr;
-                    unsigned long * c32 = (unsigned long *)chunk_ptr;
-
-                    /* Copy reference data to LRAM. */
-                    memcpy(lram_ptr , chunk_ptr, LRAM_LEN);
+                    volatile unsigned char * c8  = (volatile unsigned char *)chunk_ptr;
+                    volatile unsigned short* c16 = (volatile unsigned short*)chunk_ptr;
+                    volatile unsigned long * c32 = (volatile unsigned long *)chunk_ptr;
 
                     /* Fill both SDRAM and reference with random data at random addresses. */
-#define MEMTEST_OFFSETS_CNT (4096)
+#define MEMTEST_OFFSETS_CNT (64*1024)
                     for(i=0; i<MEMTEST_OFFSETS_CNT; i++)
                     {
                         unsigned long memtest_offset = rand() % (LRAM_LEN / byte_cnt);
                         if(byte_cnt == 1)
                         {
                             unsigned char val = (unsigned char)rand();
-                            l8[memtest_offset] = val;
                             c8[memtest_offset] = val;
+
+                            unsigned char read_val = c8[memtest_offset];
+                            if(read_val != val)
+                            {
+                                MEMTEST_ERROR_FEEDBACK((void*)(c8 + memtest_offset), val, read_val, 8, feedback_code, total_err_cnt + err_cnt);
+                                err_cnt++;
+                            }
                         }
                         else if(byte_cnt == 2)
                         {
                             unsigned short val = (unsigned short)rand();
-                            l16[memtest_offset] = val;
                             c16[memtest_offset] = val;
+
+                            unsigned short read_val = c16[memtest_offset];
+                            if(read_val != val)
+                            {
+                                MEMTEST_ERROR_FEEDBACK((void*)(c16 + memtest_offset), val, read_val, 16, feedback_code, total_err_cnt + err_cnt);
+                                err_cnt++;
+                            }
                         }
                         else // if(byte_cnt == 2)
                         {
                             unsigned long val = (unsigned long)rand();
-                            l32[memtest_offset] = val;
                             c32[memtest_offset] = val;
+
+                            unsigned long read_val = c32[memtest_offset];
+                            if(read_val != val)
+                            {
+                                MEMTEST_ERROR_FEEDBACK((void*)(c32 + memtest_offset), val, read_val, 32, feedback_code, total_err_cnt + err_cnt);
+                                err_cnt++;
+                            }
                         }
                     }
 
-                    /* Verify whole chunk with reference data. */
-                    for(i=((LRAM_LEN / sizeof(unsigned long)) - 1); i; i--)
-                    {
-                        if(*c32++ != *l32++)
-                        {
-                            err_cnt++;
-                        }
-                    }
                     ite_total = LRAM_LEN / sizeof(unsigned long);
                 }
-
 
                 /* Update total error count.
                  * (And, Q&D avoid of error count overflow)

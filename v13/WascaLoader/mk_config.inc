@@ -1,6 +1,7 @@
 CONF_VERBOSE = @
 CONF_SH_ELF = saturn-sh2-elf-
 CONF_FLAGS = -Wall -m2 -O2 -fno-strict-aliasing -fdata-sections -ffunction-sections -I$(CONF_LIBPATH)satcom_lib/ -DSC_SATURN -DSC_USE_IAPETUS -DLOGO_DISABLE -DSMPC_USE_POLLING
+CONF_FLAGS_F0 = -Wall -Werror -m2 -fdata-sections -ffunction-sections -I$(CONF_LIBPATH)satcom_lib/ -DSC_SATURN -DSC_USE_IAPETUS -DLOGO_DISABLE -DSMPC_USE_POLLING
 CONF_LDFLAGS = -nostartfiles -T bart.lnk -Wl,-Map=obj/main_elf.map -Wl,--gc-sections
 CONF_LGCC_PATH = D:/dev/SaturnOrbit/saturn-sdk/toolchain_elf/lib/gcc/sh-elf/5.1.0
 CONF_IP_PATH = D:/dev/SaturnOrbit/COMMON/IP_GAS/IP_elf.BIN

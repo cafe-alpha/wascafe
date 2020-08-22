@@ -30,6 +30,7 @@
 
 #include "memtest_normal.h"
 #include "memtest_chunk.h"
+#include "memtest_feedback.h"
 #include "memtest_region.h"
 
 
@@ -448,21 +449,29 @@ unsigned char cartram_init_test(int cs)
         menu_reset_settings(mset);
         menu_reset_items(mitems);
         menu_set_title(mset, "CartRam Setup");
-        menu_add_item(mitems, "  Config & Test  ",  0/*tag*/);
-        menu_add_item(mitems, "  MemTest Only   ",  1/*tag*/);
-        menu_add_item(mitems, "  SIZE: 16 bits  ",  2/*tag*/);
-        menu_add_item(mitems, "  SIZE: 32 bits  ",  3/*tag*/);
-        menu_add_item(mitems, "  FFh pre-fill   ",  4/*tag*/);
-        menu_add_item(mitems, "  00h pre-fill   ",  5/*tag*/);
-        menu_add_item(mitems, "  - ChunkTest -  ",  6/*tag*/);
-        menu_add_item(mitems, " - Region Test - ",  7/*tag*/);
+        menu_add_item(mitems, "Config & Test"   ,  0/*tag*/);
+        menu_add_item(mitems, "MemTest Only"    ,  1/*tag*/);
+        menu_add_item(mitems, "SIZE: 16 bits"   ,  2/*tag*/);
+        menu_add_item(mitems, "SIZE: 32 bits"   ,  3/*tag*/);
+        menu_add_item(mitems, "FFh pre-fill"    ,  4/*tag*/);
+        menu_add_item(mitems, "00h pre-fill"    ,  5/*tag*/);
+        menu_add_item(mitems, "- Region Test -" ,  6/*tag*/);
+        menu_add_item(mitems, "- ChunkTest -"   ,  7/*tag*/);
+        menu_add_item(mitems, "- FeedbackTest -",  8/*tag*/);
 
         menu_set_callback_vblank(mset, menu_vblank_clbk);
-        menu_set_pos(mset, -1/*x0*/, MENU_TOP_ROW/*y0*/, 17/*w*/, 9/*h*/, 1/*cols*/);
+        menu_set_pos(mset, -1/*x0*/, MENU_TOP_ROW/*y0*/, 18/*w*/, 10/*h*/, 1/*cols*/);
         menu_set_erase_on_exit(mset, 1);
 
+        menu_set_features
+        (
+            mset, 
+            MENU_FEATURES_TEXTCENTER
+            | (MENU_FEATURES_CONDENSED_TITLE | MENU_FEATURES_CONDENSED_TEXT)
+        );
+
         /* Show settings. */
-        int row = 17;
+        int row = 18;
         conio_printf(2, row++, COLOR_WHITE, "Access size : %d bits", (access_32bit ? 32 : 16));
         conio_printf(2, row++, COLOR_WHITE, "FFh pre fill : %s", (pre_fill_ff ? "ON " : "OFF"));
         conio_printf(2, row++, COLOR_WHITE, "00h pre fill : %s", (pre_fill_00 ? "ON " : "OFF"));
@@ -508,6 +517,16 @@ unsigned char cartram_init_test(int cs)
         }
         else if(_cartram_menu_selected == 6)
         {
+            /* Test only some specific memory regions. */
+            int ret = 0;
+            do
+            {
+                ret = memtest_region();
+            } while(ret != 0);
+            continue;
+        }
+        else if(_cartram_menu_selected == 7)
+        {
             /* Test memory by 1MB chunks. */
             int ret = 0;
             do
@@ -516,13 +535,15 @@ unsigned char cartram_init_test(int cs)
             } while(ret != 0);
             continue;
         }
-        else if(_cartram_menu_selected == 7)
+        else if(_cartram_menu_selected == 8)
         {
-            /* Test only some specific memory regions. */
+            /* Test CS0 memory by 1MB chunks, and feedback
+             * with a write to CS1 when an error happens.
+             */
             int ret = 0;
             do
             {
-                ret = memtest_region();
+                ret = memtest_feedback();
             } while(ret != 0);
             continue;
         }
