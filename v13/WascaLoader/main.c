@@ -888,7 +888,10 @@ void _main(void)
                 menu_add_item(mitems, "    Start Pseud", 20/*tag*/);
                 menu_add_item(mitems, "o Saturn Kai   ", 20/*tag*/);
 #endif
+            }
 
+            if(rc_minipseudo_romcode_check())
+            {
                 menu_add_item(mitems, "   Mini Pseudo ",  90/*tag*/);
                 menu_add_item(mitems, "Saturn Loader  ",  90/*tag*/);
             }

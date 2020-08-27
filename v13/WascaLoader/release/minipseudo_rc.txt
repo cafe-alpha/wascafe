@@ -1,0 +1,5 @@
+Mini Pseudo Saturn Loader is a module which allows to boot CD-Rs.
+It is used to recover a cartridge in the case Pseudo Saturn Kai main executable is corrupted.
+
+Contents of minipseudo_rc.bin need to be copied from offset cartridge ROM 0x9C000 (624KB) during NIOS startup.
+From WascaLoader, it is then possible to use it from "Mini Pseudo Saturn Loader" item in the bottom half of the main menu.
