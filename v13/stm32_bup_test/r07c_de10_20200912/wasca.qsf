@@ -1,0 +1,632 @@
+# -------------------------------------------------------------------------- #
+#
+# Copyright (C) 1991-2014 Altera Corporation. All rights reserved.
+# Your use of Altera Corporation's design tools, logic functions 
+# and other software and tools, and its AMPP partner logic 
+# functions, and any output files from any of the foregoing 
+# (including device programming or simulation files), and any 
+# associated documentation or information are expressly subject 
+# to the terms and conditions of the Altera Program License 
+# Subscription Agreement, the Altera Quartus II License Agreement,
+# the Altera MegaCore Function License Agreement, or other 
+# applicable license agreement, including, without limitation, 
+# that your use is for the sole purpose of programming logic 
+# devices manufactured by Altera and sold by Altera or its 
+# authorized distributors.  Please refer to the applicable 
+# agreement for further details.
+#
+# -------------------------------------------------------------------------- #
+#
+# Quartus II 64-Bit
+# Version 14.1.0 Build 186 12/03/2014 SJ Web Edition
+# Date created = 23:22:58  May 21, 2015
+#
+# -------------------------------------------------------------------------- #
+#
+# Notes:
+#
+# 1) The default values for assignments are stored in the file:
+#		wasca_assignment_defaults.qdf
+#    If this file doesn't exist, see file:
+#		assignment_defaults.qdf
+#
+# 2) Altera recommends that you do not modify this file. This
+#    file is updated automatically by the Quartus II software
+#    and any changes you make may be lost or overwritten.
+#
+# -------------------------------------------------------------------------- #
+
+set_global_assignment -name FAMILY "MAX 10"
+
+# About each devices used :
+#  - First Wasca cart          : 10M08SCE144I7G
+#  - MAX 10 Board r0.1 #1      : 10M04SCE144C8G (for re-use in Wasca 1.3)
+#  - MAX 10 Board r0.1 #2      : 10M08SCE144C8G (for re-use in Wasca 1.3)
+#  - MAX 10 Board r0.5         : 10M04SCE144C8G
+#  - MAX 10 Board r0.7 #1      : 10M16SAE144C8G
+#  - DE10-lite                 : 10M50DAF484C7G
+set_global_assignment -name DEVICE 10M50DAF484C7G
+
+# Compilation settings
+set_global_assignment -name PHYSICAL_SYNTHESIS_EFFORT EXTRA
+set_global_assignment -name FITTER_EFFORT STANDARD_FIT
+set_global_assignment -name SYNTHESIS_EFFORT AUTO
+
+set_global_assignment -name TOP_LEVEL_ENTITY wasca_toplevel
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION 14.1.0
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "23:22:58  MAY 21, 2015"
+set_global_assignment -name LAST_QUARTUS_VERSION 15.1.2
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
+set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
+set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
+set_global_assignment -name DEVICE_FILTER_PACKAGE FBGA
+set_global_assignment -name DEVICE_FILTER_PIN_COUNT 484
+set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR 2
+set_global_assignment -name EDA_DESIGN_ENTRY_SYNTHESIS_TOOL Synplify
+set_global_assignment -name EDA_INPUT_DATA_FORMAT VQM -section_id eda_design_synthesis
+set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim-Altera (VHDL)"
+set_global_assignment -name EDA_TIME_SCALE "1 ps" -section_id eda_simulation
+set_global_assignment -name EDA_OUTPUT_DATA_FORMAT VHDL -section_id eda_simulation
+set_global_assignment -name EDA_BOARD_DESIGN_TIMING_TOOL "Stamp (Timing)"
+set_global_assignment -name EDA_OUTPUT_DATA_FORMAT STAMP -section_id eda_board_design_timing
+set_global_assignment -name EDA_BOARD_DESIGN_SYMBOL_TOOL "ViewDraw (Symbol)"
+set_global_assignment -name EDA_OUTPUT_DATA_FORMAT VIEWDRAW -section_id eda_board_design_symbol
+set_global_assignment -name EDA_BOARD_DESIGN_SIGNAL_INTEGRITY_TOOL "IBIS (Signal Integrity)"
+set_global_assignment -name EDA_OUTPUT_DATA_FORMAT IBIS -section_id eda_board_design_signal_integrity
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+set_global_assignment -name STRATIX_DEVICE_IO_STANDARD "2.5 V"
+
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to reset_reset_n
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_waitrequest
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_interrupt
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_address[24]
+#set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_address[25]
+
+
+set_global_assignment -name PROJECT_IP_REGENERATION_POLICY ALWAYS_REGENERATE_IP
+set_global_assignment -name ENABLE_OCT_DONE OFF
+set_global_assignment -name ENABLE_CONFIGURATION_PINS OFF
+set_global_assignment -name USE_CONFIGURATION_DEVICE OFF
+set_global_assignment -name CRC_ERROR_OPEN_DRAIN OFF
+set_global_assignment -name OUTPUT_IO_TIMING_NEAR_END_VMEAS "HALF VCCIO" -rise
+set_global_assignment -name OUTPUT_IO_TIMING_NEAR_END_VMEAS "HALF VCCIO" -fall
+set_global_assignment -name OUTPUT_IO_TIMING_FAR_END_VMEAS "HALF SIGNAL SWING" -rise
+set_global_assignment -name OUTPUT_IO_TIMING_FAR_END_VMEAS "HALF SIGNAL SWING" -fall
+set_global_assignment -name INTERNAL_FLASH_UPDATE_MODE "SINGLE IMAGE"
+set_global_assignment -name FLOW_ENABLE_POWER_ANALYZER ON
+set_global_assignment -name POWER_DEFAULT_INPUT_IO_TOGGLE_RATE "12.5 %"
+set_global_assignment -name EXTERNAL_FLASH_FALLBACK_ADDRESS 00000000
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to clk_clk
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_addr[12]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_addr[11]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_addr[10]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_addr[8]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_addr[9]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_addr[7]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_addr[6]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_addr[5]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_addr[3]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_addr[4]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_addr[2]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_addr[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_addr[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_ba[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_ba[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_cas_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_cke
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_cs_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_dq[15]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_dq[14]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_dq[13]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_dq[12]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_dq[11]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_dq[10]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_dq[9]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_dq[8]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_dq[7]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_dq[6]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_dq[5]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_dq[4]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_dq[3]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_dq[2]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_dq[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_dq[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_dqm[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_dqm[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_ras_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to external_sdram_controller_wire_we_n
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to reset_reset_n
+#set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to abus_slave_0_abus_address[25]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to abus_slave_0_abus_address[24]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to abus_slave_0_abus_address[23]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to abus_slave_0_abus_address[22]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to abus_slave_0_abus_address[21]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to abus_slave_0_abus_address[20]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to abus_slave_0_abus_address[19]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to abus_slave_0_abus_address[18]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to abus_slave_0_abus_address[17]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to abus_slave_0_abus_address[16]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to abus_slave_0_abus_chipselect[2]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to abus_slave_0_abus_chipselect[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to abus_slave_0_abus_chipselect[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to abus_slave_0_abus_direction
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to abus_slave_0_abus_interrupt
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to abus_slave_0_abus_muxing[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to abus_slave_0_abus_muxing[0]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to abus_slave_0_abus_read
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to abus_slave_0_abus_waitrequest
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to abus_slave_0_abus_write[1]
+set_instance_assignment -name CURRENT_STRENGTH_NEW 8MA -to abus_slave_0_abus_write[0]
+set_global_assignment -name ENABLE_SIGNALTAP OFF
+set_global_assignment -name USE_SIGNALTAP_FILE wasca_signaltap.stp
+
+################################################################################
+# The A-Bus mapping for MAX 10 board r0.7 (c)
+
+#============================================================
+# CLOCK
+#============================================================
+#set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ADC_CLK_10
+#set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to MAX10_CLK1_50
+#set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to MAX10_CLK2_50
+#set_location_assignment PIN_N5 -to ADC_CLK_10
+#set_location_assignment PIN_P11 -to MAX10_CLK1_50
+#set_location_assignment PIN_N14 -to MAX10_CLK2_50
+
+# # Pin 26 : SCSPCLK, from SIM
+# # Pin 28 : SMD CLK from same board as this MAX 10 chip
+# # "SW3" is used to configure unused clock signal pin as input.
+# #set_location_assignment PIN_26 -to clk_clk
+# set_location_assignment PIN_26 -to switches_conn_export[2]
+# set_location_assignment PIN_28 -to ext_clk
+
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to clk_clk
+set_location_assignment PIN_P11 -to clk_clk
+
+
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_direction
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_muxing[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_muxing[1]
+set_location_assignment PIN_AB12 -to abus_slave_0_abus_direction
+set_location_assignment PIN_W7 -to abus_slave_0_abus_muxing[0]
+set_location_assignment PIN_Y11 -to abus_slave_0_abus_muxing[1]
+
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_addressdata[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_addressdata[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_addressdata[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_addressdata[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_addressdata[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_addressdata[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_addressdata[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_addressdata[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_addressdata[8]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_addressdata[9]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_addressdata[10]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_addressdata[11]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_addressdata[12]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_addressdata[13]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_addressdata[14]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_addressdata[15]
+set_location_assignment PIN_W6 -to abus_slave_0_abus_addressdata[0]
+set_location_assignment PIN_V5 -to abus_slave_0_abus_addressdata[1]
+set_location_assignment PIN_W5 -to abus_slave_0_abus_addressdata[2]
+set_location_assignment PIN_AA15 -to abus_slave_0_abus_addressdata[3]
+set_location_assignment PIN_AA10 -to abus_slave_0_abus_addressdata[4]
+set_location_assignment PIN_AB10 -to abus_slave_0_abus_addressdata[5]
+set_location_assignment PIN_W11 -to abus_slave_0_abus_addressdata[6]
+set_location_assignment PIN_AB11 -to abus_slave_0_abus_addressdata[7]
+set_location_assignment PIN_AA14 -to abus_slave_0_abus_addressdata[8]
+set_location_assignment PIN_W13 -to abus_slave_0_abus_addressdata[9]
+set_location_assignment PIN_W12 -to abus_slave_0_abus_addressdata[10]
+set_location_assignment PIN_AB13 -to abus_slave_0_abus_addressdata[11]
+set_location_assignment PIN_Y7 -to abus_slave_0_abus_addressdata[12]
+set_location_assignment PIN_AA8 -to abus_slave_0_abus_addressdata[13]
+set_location_assignment PIN_Y8 -to abus_slave_0_abus_addressdata[14]
+set_location_assignment PIN_AA9 -to abus_slave_0_abus_addressdata[15]
+
+
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_read
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_write[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_write[1]
+set_location_assignment PIN_Y4 -to abus_slave_0_abus_read
+set_location_assignment PIN_AA5 -to abus_slave_0_abus_write[0]
+set_location_assignment PIN_Y3 -to abus_slave_0_abus_write[1]
+
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_chipselect[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_chipselect[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_chipselect[2]
+set_location_assignment PIN_Y6 -to abus_slave_0_abus_chipselect[0]
+set_location_assignment PIN_Y5 -to abus_slave_0_abus_chipselect[1]
+set_location_assignment PIN_AA6 -to abus_slave_0_abus_chipselect[2]
+
+
+# abus_slave_0_abus_waitrequest     : ABUS_3V_WAIT
+# abus_slave_0_abus_interrupt       : ABUS_3V_IRQ                                -> redirected to an unassigned pin on connector
+# abus_slave_0_abus_disableout      : WAIT_ENABLE = for 3V3 buffer control (OUT) -> redirected to DE10's LEDR[5]
+set_location_assignment PIN_AA7 -to abus_slave_0_abus_waitrequest
+set_location_assignment PIN_AA17 -to abus_slave_0_abus_interrupt
+set_location_assignment PIN_C13 -to wait_enable
+
+#set_location_assignment PIN_AB3 -to reset_reset_n
+set_location_assignment PIN_AB6 -to reset_reset_n
+
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_address[16]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_address[17]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_address[18]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_address[19]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_address[20]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_address[21]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_address[22]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to abus_slave_0_abus_address[23]
+set_location_assignment PIN_V7 -to abus_slave_0_abus_address[16]
+set_location_assignment PIN_W8 -to abus_slave_0_abus_address[17]
+set_location_assignment PIN_V8 -to abus_slave_0_abus_address[18]
+set_location_assignment PIN_W9 -to abus_slave_0_abus_address[19]
+set_location_assignment PIN_V9 -to abus_slave_0_abus_address[20]
+set_location_assignment PIN_W10 -to abus_slave_0_abus_address[21]
+set_location_assignment PIN_V10 -to abus_slave_0_abus_address[22]
+#set_location_assignment PIN_AB2 -to abus_slave_0_abus_address[23]
+set_location_assignment PIN_AB5 -to abus_slave_0_abus_address[23]
+
+# A24 and A25 are not used
+#set_location_assignment PIN_127 -to abus_slave_0_abus_address[24]
+#set_location_assignment PIN_44 -to abus_slave_0_abus_address[25]
+
+
+################################################################################
+# Direct access to micro SD card without detection pin.
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to spi_sd_card_SS_n
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to spi_sd_card_MOSI
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to spi_sd_card_SCLK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to spi_sd_card_MISO
+
+set_location_assignment PIN_Y10 -to spi_sd_card_SS_n
+set_location_assignment PIN_AA11 -to spi_sd_card_MOSI
+set_location_assignment PIN_AA12 -to spi_sd_card_SCLK
+set_location_assignment PIN_AB17 -to spi_sd_card_MISO
+
+
+################################################################################
+# SPI interface with STM32
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to spi_stm32_SS_n
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to spi_stm32_MISO
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to spi_stm32_SCLK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to spi_stm32_MOSI
+set_location_assignment PIN_Y19 -to spi_stm32_SS_n
+set_location_assignment PIN_AB21 -to spi_stm32_MISO
+set_location_assignment PIN_AA20 -to spi_stm32_SCLK
+set_location_assignment PIN_AB20 -to spi_stm32_MOSI
+
+# Synchronization pin for SPI (STM32 -> MAX10 when ready for receiving SPI)
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to spi_sync_conn_export
+set_location_assignment PIN_AA19 -to spi_sync_conn_export
+
+
+################################################################################
+# Assignments for I2S
+#set_location_assignment PIN_138 -to audio_SSEL
+#set_location_assignment PIN_136 -to audio_out_DACDAT
+#set_location_assignment PIN_38 -to audio_out_BCLK
+#set_location_assignment PIN_43 -to audio_out_DACLRCK
+
+
+################################################################################
+# SDRAM mapping for DE10-lite
+# IS42S16320D-7TL https://www.mouser.jp/ProductDetail/ISSI/IS42S16320D-7TL?qs=Fza4peKjXe%2FI0m31MwCZFQ==
+
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_addr[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_addr[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_addr[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_addr[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_addr[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_addr[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_addr[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_addr[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_addr[8]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_addr[9]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_addr[10]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_addr[11]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_addr[12]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_ba[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_ba[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_cas_n
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_cke
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_clk_pin
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_cs_n
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_dq[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_dq[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_dq[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_dq[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_dq[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_dq[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_dq[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_dq[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_dq[8]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_dq[9]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_dq[10]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_dq[11]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_dq[12]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_dq[13]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_dq[14]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_dq[15]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_dqm[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_ras_n
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_dqm[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to external_sdram_controller_wire_we_n
+set_location_assignment PIN_U17 -to external_sdram_controller_wire_addr[0]
+set_location_assignment PIN_W19 -to external_sdram_controller_wire_addr[1]
+set_location_assignment PIN_V18 -to external_sdram_controller_wire_addr[2]
+set_location_assignment PIN_U18 -to external_sdram_controller_wire_addr[3]
+set_location_assignment PIN_U19 -to external_sdram_controller_wire_addr[4]
+set_location_assignment PIN_T18 -to external_sdram_controller_wire_addr[5]
+set_location_assignment PIN_T19 -to external_sdram_controller_wire_addr[6]
+set_location_assignment PIN_R18 -to external_sdram_controller_wire_addr[7]
+set_location_assignment PIN_P18 -to external_sdram_controller_wire_addr[8]
+set_location_assignment PIN_P19 -to external_sdram_controller_wire_addr[9]
+set_location_assignment PIN_T20 -to external_sdram_controller_wire_addr[10]
+set_location_assignment PIN_P20 -to external_sdram_controller_wire_addr[11]
+set_location_assignment PIN_R20 -to external_sdram_controller_wire_addr[12]
+set_location_assignment PIN_T21 -to external_sdram_controller_wire_ba[0]
+set_location_assignment PIN_T22 -to external_sdram_controller_wire_ba[1]
+set_location_assignment PIN_U21 -to external_sdram_controller_wire_cas_n
+set_location_assignment PIN_N22 -to external_sdram_controller_wire_cke
+set_location_assignment PIN_L14 -to external_sdram_clk_pin
+set_location_assignment PIN_U20 -to external_sdram_controller_wire_cs_n
+set_location_assignment PIN_Y21 -to external_sdram_controller_wire_dq[0]
+set_location_assignment PIN_Y20 -to external_sdram_controller_wire_dq[1]
+set_location_assignment PIN_AA22 -to external_sdram_controller_wire_dq[2]
+set_location_assignment PIN_AA21 -to external_sdram_controller_wire_dq[3]
+set_location_assignment PIN_Y22 -to external_sdram_controller_wire_dq[4]
+set_location_assignment PIN_W22 -to external_sdram_controller_wire_dq[5]
+set_location_assignment PIN_W20 -to external_sdram_controller_wire_dq[6]
+set_location_assignment PIN_V21 -to external_sdram_controller_wire_dq[7]
+set_location_assignment PIN_P21 -to external_sdram_controller_wire_dq[8]
+set_location_assignment PIN_J22 -to external_sdram_controller_wire_dq[9]
+set_location_assignment PIN_H21 -to external_sdram_controller_wire_dq[10]
+set_location_assignment PIN_H22 -to external_sdram_controller_wire_dq[11]
+set_location_assignment PIN_G22 -to external_sdram_controller_wire_dq[12]
+set_location_assignment PIN_G20 -to external_sdram_controller_wire_dq[13]
+set_location_assignment PIN_G19 -to external_sdram_controller_wire_dq[14]
+set_location_assignment PIN_F22 -to external_sdram_controller_wire_dq[15]
+set_location_assignment PIN_V22 -to external_sdram_controller_wire_dqm[0]
+set_location_assignment PIN_U22 -to external_sdram_controller_wire_ras_n
+set_location_assignment PIN_J21 -to external_sdram_controller_wire_dqm[1]
+set_location_assignment PIN_V20 -to external_sdram_controller_wire_we_n
+
+## #set_location_assignment PIN_85 -to external_sdram_controller_wire_clk
+## set_location_assignment PIN_85 -to external_sdram_clk_pin
+
+
+################################################################################
+# LEDs (R, G, O1, O2) pinout
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to leds_conn_export[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to leds_conn_export[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to leds_conn_export[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to leds_conn_export[3]
+
+set_location_assignment PIN_E14 -to leds_conn_export[0]
+set_location_assignment PIN_D14 -to leds_conn_export[1]
+set_location_assignment PIN_A11 -to leds_conn_export[2]
+set_location_assignment PIN_B11 -to leds_conn_export[3]
+
+################################################################################
+# UART mapping. It is connected to SIM, which mixes it with its own serial communication.
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to uart_0_external_connection_rxd
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to uart_0_external_connection_txd
+
+#set_location_assignment PIN_AB6 -to uart_0_external_connection_rxd
+#set_location_assignment PIN_AB5 -to uart_0_external_connection_txd
+set_location_assignment PIN_AB3 -to uart_0_external_connection_rxd
+set_location_assignment PIN_AB2 -to uart_0_external_connection_txd
+
+################################################################################
+# Extra pins
+set_location_assignment PIN_AA2 -to abus_slave_0_abus_address[25]
+#set_location_assignment PIN_AB7 -to abus_tim[1]
+#set_location_assignment PIN_AB9 -to abus_tim[2]
+#set_location_assignment PIN_AA17 -to de10_aa[17] -> IRQ
+#set_location_assignment PIN_AB19 -to de10_ab[19]
+
+
+################################################################################
+# JTAG mapping
+#set_location_assignment PIN_16 -to altera_reserved_tms
+#set_location_assignment PIN_18 -to altera_reserved_tck
+#set_location_assignment PIN_19 -to altera_reserved_tdi
+#set_location_assignment PIN_20 -to altera_reserved_tdo
+
+
+#============================================================
+# SEG7
+#============================================================
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex5_conn_export[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex5_conn_export[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex5_conn_export[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex5_conn_export[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex5_conn_export[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex5_conn_export[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex5_conn_export[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex4_conn_export[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex4_conn_export[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex4_conn_export[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex4_conn_export[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex4_conn_export[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex4_conn_export[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex4_conn_export[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex3_conn_export[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex3_conn_export[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex3_conn_export[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex3_conn_export[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex3_conn_export[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex3_conn_export[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex3_conn_export[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex2_conn_export[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex2_conn_export[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex2_conn_export[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex2_conn_export[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex2_conn_export[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex2_conn_export[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex2_conn_export[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex1_conn_export[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex1_conn_export[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex1_conn_export[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex1_conn_export[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex1_conn_export[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex1_conn_export[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex1_conn_export[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex0_conn_export[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex0_conn_export[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex0_conn_export[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex0_conn_export[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex0_conn_export[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex0_conn_export[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hex0_conn_export[6]
+
+# The dot for each 7-seg display.
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hexdot_conn_export[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hexdot_conn_export[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hexdot_conn_export[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hexdot_conn_export[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hexdot_conn_export[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to hexdot_conn_export[5]
+
+set_location_assignment PIN_C14 -to hex5_conn_export[0]
+set_location_assignment PIN_E15 -to hex5_conn_export[1]
+set_location_assignment PIN_C15 -to hex5_conn_export[2]
+set_location_assignment PIN_C16 -to hex5_conn_export[3]
+set_location_assignment PIN_E16 -to hex5_conn_export[4]
+set_location_assignment PIN_D17 -to hex5_conn_export[5]
+set_location_assignment PIN_C17 -to hex5_conn_export[6]
+set_location_assignment PIN_C18 -to hex4_conn_export[0]
+set_location_assignment PIN_D18 -to hex4_conn_export[1]
+set_location_assignment PIN_E18 -to hex4_conn_export[2]
+set_location_assignment PIN_B16 -to hex4_conn_export[3]
+set_location_assignment PIN_A17 -to hex4_conn_export[4]
+set_location_assignment PIN_A18 -to hex4_conn_export[5]
+set_location_assignment PIN_B17 -to hex4_conn_export[6]
+set_location_assignment PIN_B20 -to hex3_conn_export[0]
+set_location_assignment PIN_A20 -to hex3_conn_export[1]
+set_location_assignment PIN_B19 -to hex3_conn_export[2]
+set_location_assignment PIN_A21 -to hex3_conn_export[3]
+set_location_assignment PIN_B21 -to hex3_conn_export[4]
+set_location_assignment PIN_C22 -to hex3_conn_export[5]
+set_location_assignment PIN_B22 -to hex3_conn_export[6]
+set_location_assignment PIN_F21 -to hex2_conn_export[0]
+set_location_assignment PIN_E22 -to hex2_conn_export[1]
+set_location_assignment PIN_E21 -to hex2_conn_export[2]
+set_location_assignment PIN_C19 -to hex2_conn_export[3]
+set_location_assignment PIN_C20 -to hex2_conn_export[4]
+set_location_assignment PIN_D19 -to hex2_conn_export[5]
+set_location_assignment PIN_E17 -to hex2_conn_export[6]
+set_location_assignment PIN_F18 -to hex1_conn_export[0]
+set_location_assignment PIN_E20 -to hex1_conn_export[1]
+set_location_assignment PIN_E19 -to hex1_conn_export[2]
+set_location_assignment PIN_J18 -to hex1_conn_export[3]
+set_location_assignment PIN_H19 -to hex1_conn_export[4]
+set_location_assignment PIN_F19 -to hex1_conn_export[5]
+set_location_assignment PIN_F20 -to hex1_conn_export[6]
+set_location_assignment PIN_J20 -to hex0_conn_export[0]
+set_location_assignment PIN_K20 -to hex0_conn_export[1]
+set_location_assignment PIN_L18 -to hex0_conn_export[2]
+set_location_assignment PIN_N18 -to hex0_conn_export[3]
+set_location_assignment PIN_M20 -to hex0_conn_export[4]
+set_location_assignment PIN_N19 -to hex0_conn_export[5]
+set_location_assignment PIN_N20 -to hex0_conn_export[6]
+
+# The dot for each 7-seg display.
+set_location_assignment PIN_L19 -to hexdot_conn_export[0]
+set_location_assignment PIN_F17 -to hexdot_conn_export[1]
+set_location_assignment PIN_D22 -to hexdot_conn_export[2]
+set_location_assignment PIN_A19 -to hexdot_conn_export[3]
+set_location_assignment PIN_A16 -to hexdot_conn_export[4]
+set_location_assignment PIN_D15 -to hexdot_conn_export[5]
+
+#============================================================
+# KEY
+#============================================================
+set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to KEY[0]
+set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to KEY[1]
+set_location_assignment PIN_B8 -to KEY[0]
+set_location_assignment PIN_A7 -to KEY[1]
+
+#============================================================
+# LED
+#============================================================
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to extra_leds_conn_export[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to extra_leds_conn_export[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to extra_leds_conn_export[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to extra_leds_conn_export[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to extra_leds_conn_export[4]
+#set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[5]
+#set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[6]
+#set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[7]
+#set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[8]
+#set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to LEDR[9]
+set_location_assignment PIN_A8 -to extra_leds_conn_export[0]
+set_location_assignment PIN_A9 -to extra_leds_conn_export[1]
+set_location_assignment PIN_A10 -to extra_leds_conn_export[2]
+set_location_assignment PIN_B10 -to extra_leds_conn_export[3]
+set_location_assignment PIN_D13 -to extra_leds_conn_export[4]
+
+# Wait enable
+#set_location_assignment PIN_C13 -to LEDR[5]
+
+# Regular LEDs
+#set_location_assignment PIN_E14 -to LEDR[6]
+#set_location_assignment PIN_D14 -to LEDR[7]
+#set_location_assignment PIN_A11 -to LEDR[8]
+#set_location_assignment PIN_B11 -to LEDR[9]
+
+#============================================================
+# SW
+#============================================================
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[0]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to switches_conn_export[7]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to switches_conn_export[6]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to switches_conn_export[5]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to switches_conn_export[4]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to switches_conn_export[3]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to switches_conn_export[2]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to switches_conn_export[1]
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to switches_conn_export[0]
+
+set_location_assignment PIN_C10 -to SW[0]
+set_location_assignment PIN_C11 -to SW[1]
+set_location_assignment PIN_D12 -to switches_conn_export[7]
+set_location_assignment PIN_C12 -to switches_conn_export[6]
+set_location_assignment PIN_A12 -to switches_conn_export[5]
+set_location_assignment PIN_B12 -to switches_conn_export[4]
+set_location_assignment PIN_A13 -to switches_conn_export[3]
+set_location_assignment PIN_A14 -to switches_conn_export[2]
+set_location_assignment PIN_B14 -to switches_conn_export[1]
+set_location_assignment PIN_F15 -to switches_conn_export[0]
+
+
+set_global_assignment -name ENABLE_BOOT_SEL_PIN OFF
+set_global_assignment -name POR_SCHEME "INSTANT ON"
+set_global_assignment -name EN_USER_IO_WEAK_PULLUP ON
+set_global_assignment -name EN_SPI_IO_WEAK_PULLUP ON
+set_global_assignment -name ON_CHIP_BITSTREAM_DECOMPRESSION OFF
+set_global_assignment -name RESERVE_ALL_UNUSED_PINS_WEAK_PULLUP "AS INPUT TRI-STATED WITH WEAK PULL-UP"
+set_global_assignment -name POF_VERIFY_PROTECT ON
+set_global_assignment -name EDA_LMF_FILE synplcty.lmf -section_id eda_design_synthesis
+set_global_assignment -name EDA_TEST_BENCH_ENABLE_STATUS TEST_BENCH_MODE -section_id eda_simulation
+set_global_assignment -name EDA_NATIVELINK_SIMULATION_TEST_BENCH wasca_tb -section_id eda_simulation
+set_global_assignment -name EDA_TEST_BENCH_NAME wasca_tb -section_id eda_simulation
+set_global_assignment -name EDA_DESIGN_INSTANCE_NAME uut -section_id wasca_tb
+set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME wasca_tb -section_id wasca_tb
+set_global_assignment -name EDA_TEST_BENCH_FILE wasca_tb.vhd -section_id wasca_tb
+set_global_assignment -name SDC_FILE wasca.out.sdc
+set_global_assignment -name QIP_FILE wasca/synthesis/wasca.qip
+set_global_assignment -name QIP_FILE software/wasca_test9/mem_init/meminit.qip
+set_global_assignment -name CDF_FILE Chain1.cdf
+set_global_assignment -name QSYS_FILE wasca.qsys
+set_global_assignment -name VHDL_FILE wasca_toplevel.vhd
+set_global_assignment -name CDF_FILE output_files/Chain1.cdf
+set_global_assignment -name SIGNALTAP_FILE wasca_signaltap.stp
+set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
