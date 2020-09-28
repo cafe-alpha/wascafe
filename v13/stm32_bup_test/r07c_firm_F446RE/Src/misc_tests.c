@@ -268,19 +268,6 @@ void bup_test_bench(void)
 
 
     /* ------------------------------------------ */
-    /* Flush written data.
-     * (Should be done when all the blocks of a save are written)
-     */
-    memset(pkt_in , 0, sizeof(wl_spi_pkt_t));
-    memset(pkt_out, 0, sizeof(wl_spi_pkt_t));
-    pkt_in->cmn.command = WL_SPICMD_BUPFLUSH;
-
-    bup_file_process(pkt_in, pkt_out);
-
-    termout(WL_LOG_DEBUGNORMAL, "[bup_test_bench::FLUSH]len:%u -> %s", params_out->len, (params_out->len == 0 ? "NG" : "OK"));
-
-
-    /* ------------------------------------------ */
     /* Read back the block written just before. */
     memset(pkt_in , 0, sizeof(wl_spi_pkt_t));
     memset(pkt_out, 0, sizeof(wl_spi_pkt_t));

@@ -208,26 +208,93 @@ typedef struct _wl_spicomm_version_t
 #define WL_SPICMD_MEMWRITE 0x21
 
 /* Command IDs for backup memory block access.
- * Read and write behave similarly to memory access.
+ * These commands re-use the same data structure and outline as memory access.
  *
- * Open, flush and close are added specifically for
- * backup memory access.
- *
- * Open/Flush/Close Transfer outline :
- *  1. Send read request from MAX10
- *     | wl_spi_pkt_t
- *     |  -> params contains wl_spicomm_memacc_t.
- *     |  -> data is ignored.
- *  2. Send back read ACK to MAX10
- *     | wl_spi_pkt_t
- *     |  -> params contains wl_spicomm_memacc_t.
- *     |  -> data is ignored.
+ * -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ * Command     : WL_SPICMD_BUPOPEN
+ * Description : Open backup file with specified data length.
+ *             : If already open, previous file is closed.
+ *             : If not exist, contents are allocated and initialized to FFh.
+ *             : File name is decided on STM32 side and depends on data size.
+ * Outline     : 
+ *    1. Send open request from MAX10
+ *       | wl_spi_pkt_t params
+ *       |  -> len : backup data length, KB unit
+ *       |           (0.5MB = 512KB, 1MB = 1MB etc)
+ *       | unsigned char params[]
+ *       |  -> unused
+ *    2. Send back open ACK to MAX10
+ *       | wl_spi_pkt_t params
+ *       |  -> len : same as input parameter on success
+ *       |           set to zero if file open failed
+ *       | unsigned char params[]
+ *       |  -> unused
+ * 
+ * -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ * Command     : WL_SPICMD_BUPREAD
+ * Description : Read backup data at specified block ID.
+ *             : Size is limited to one block (512 bytes) per transaction.
+ * Outline     : 
+ *    1. Send read request from MAX10
+ *       | wl_spi_pkt_t params
+ *       |  -> addr : block ID
+ *       |           (0 = first block, 1 = block from 512th byte etc)
+ *       | unsigned char params[]
+ *       |  -> unused
+ *    2. Send back read data to MAX10
+ *       | wl_spi_pkt_t params
+ *       |  -> len : read data length (512 bytes) on success
+ *       |           set to zero if read failed
+ *       | unsigned char params[]
+ *       |  -> read data itself
+ * 
+ * -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ * Command     : WL_SPICMD_BUPWRITE
+ * Description : Write backup data at specified block ID.
+ *             : Size is limited to one block (512 bytes) per transaction.
+ * Note #1     : Write data is gathered on STM32 side and consecutive blocks
+ *             : are written in a single time.
+ * Note #2     : Write data contents are automatically flushed to SD card
+ *             : after an interval of time without write request from MAX 10.
+ * Outline     : 
+ *    1. Send write request from MAX10
+ *       | wl_spi_pkt_t params
+ *       |  -> addr : block ID
+ *       |           (0 = first block, 1 = block from 512th byte etc)
+ *       | unsigned char params[]
+ *       |  -> data to write
+ *    2. Send back write ACK to MAX10
+ *       | wl_spi_pkt_t params
+ *       |  -> len : written data length (512 bytes) on success
+ *       |           set to zero if write failed
+ *       | unsigned char params[]
+ *       |  -> unused
+ * 
+ * -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+ * Command     : WL_SPICMD_BUPCLOSE
+ * Description : Close backup data access to SD card.
+ *             : (After that, backup data read/write return an error)
+ * Note #1     : Write data is automatically gathered and synchronized on STM32
+ *             : side so that it should not be necessary to use this command
+ *             : in normal time.
+ * Outline     : 
+ *    1. Send close request from MAX10
+ *       | wl_spi_pkt_t params
+ *       |  -> unused
+ *       | unsigned char params[]
+ *       |  -> unused
+ *    2. Send back close ACK to MAX10
+ *       | wl_spi_pkt_t params
+ *       |  -> len : length (in KB unit) of file just closed
+ *       |           set to zero if close failed
+ *       | unsigned char params[]
+ *       |  -> unused
+ * 
  */
 #define WL_SPICMD_BUPOPEN  0x24
 #define WL_SPICMD_BUPREAD  0x25
 #define WL_SPICMD_BUPWRITE 0x26
-#define WL_SPICMD_BUPFLUSH 0x27
-#define WL_SPICMD_BUPCLOSE 0x28
+#define WL_SPICMD_BUPCLOSE 0x27
 
 #define WL_SPICMD_IS_BUP(_CMD_) (((_CMD_) >= WL_SPICMD_BUPOPEN) && ((_CMD_) <= WL_SPICMD_BUPCLOSE) ? 1 : 0)
 
@@ -252,17 +319,8 @@ typedef struct _wl_spicomm_memacc_t
      */
     unsigned long len;
 
-    /* Miscellaneous flag.
-     * 
-     * During BUP file write : data flush flag.
-     * | Indicate if written contents have to be flushed to file right now or not.
-     * |  - 0 : can flush later
-     * |  - 1 : flush now
-     */
-    unsigned char flag;
-
     /* Unused, reserved for future usage if any. */
-    unsigned char unused[WL_SPI_PARAMS_LEN - 4 - 4 - 1];
+    unsigned char unused[WL_SPI_PARAMS_LEN - 4 - 4];
 } SC_ALIGN_4_BYTES(wl_spicomm_memacc_t);
 
 
