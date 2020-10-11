@@ -1,0 +1,1 @@
+Ultra version of minipseudo that needs to be copied from offset cartridge ROM 0x1800000 (24MB) during NIOS startup.

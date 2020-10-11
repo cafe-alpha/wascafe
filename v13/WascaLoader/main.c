@@ -717,7 +717,7 @@ void pskai_load(int full_mode)
 }
 
 
-#include "../minipseudo/minipseudo_rc.h"
+#include "../minipseudo_ultra/minipseudo_rc.h"
 void do_minipseudo(void)
 {
     unsigned long crc32;
