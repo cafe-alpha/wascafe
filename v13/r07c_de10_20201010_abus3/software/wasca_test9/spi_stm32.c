@@ -14,7 +14,7 @@
  * Warning : SPI transfer becomes significantly
  *           slower when log output is enabled.
  */
-#define SPI_DEBUG_LOGS 1
+#define SPI_DEBUG_LOGS 0
 
 
 
@@ -34,7 +34,6 @@
 #define BUFFSPI_REG_MAGIC_FACE      0x2007
 
 /* Maximum word (16 bits) count for each (Tx0, Tx1, Rx0, Rx1) buffers. */
-//#define BUFFSPI_MAXCNT              600
 #define BUFFSPI_MAXCNT              512
 
 void spi_init(void)
@@ -48,19 +47,13 @@ void spi_init(void)
     int i;
     for(i=0; i<BUFFSPI_MAXCNT; i++)
     {
-        p16_spi[BUFFSPI_BUFFER0_WRITE + i] = (((2*i+1+'A') & 0xFF) << 8) | ((2*i+0+'A') & 0xFF);
+        p16_spi[BUFFSPI_BUFFER0_WRITE + i] = 0;
         p16_spi[BUFFSPI_BUFFER1_WRITE + i] = 0;
         p16_spi[BUFFSPI_BUFFER0_READ  + i] = 0;
         p16_spi[BUFFSPI_BUFFER1_READ  + i] = 0;
     }
 
-    p16_spi[BUFFSPI_BUFFER0_WRITE + 0] = 0x1234;
-    p16_spi[BUFFSPI_BUFFER0_WRITE + 1] = 0x5678;
-    p16_spi[BUFFSPI_BUFFER0_WRITE + 2] = 0x90AB;
-    //p16_spi[BUFFSPI_BUFFER0_WRITE + 3] = 0xCDEF;
-
-    //p16_spi[BUFFSPI_REG_LENGTH       ] = sizeof(wl_spi_pkt_t) /*/ sizeof(unsigned short)*/; /* Number of words = 16 bit each. */
-    p16_spi[BUFFSPI_REG_LENGTH       ] = (sizeof(wl_spi_pkt_t) / sizeof(unsigned short)) + 1; /* Number of words = 16 bit each. */
+    p16_spi[BUFFSPI_REG_LENGTH       ] = sizeof(wl_spi_pkt_t) / sizeof(unsigned short); /* Number of words = 16 bit each. */
     p16_spi[BUFFSPI_REG_CS_MODE      ] =   1; /* CS blinking. */
     p16_spi[BUFFSPI_REG_DELAY        ] =  70; /* 70 clocks @ 116 Mhz between each 16 bit. */
     p16_spi[BUFFSPI_REG_BUFFER_SELECT] =   0; /* Using buffer 0. */
@@ -78,25 +71,6 @@ void spi_sendreceive(unsigned short* snd_ptr, unsigned short* rcv_ptr, unsigned 
 {
     volatile unsigned short* p16_spi = (unsigned short *)BUFFERED_SPI_0_BASE;
 
-    /* Enable debug with 7-segments display here. */
-    h7seg_enable();
-
-if(snd_ptr)
-{
-    h7seg_u4_out(0/*id*/, 0x5); // Send
-}
-else
-{
-    h7seg_u4_out(0/*id*/, 0xA); // Receive
-}
-
-
-#if 0
-h7seg_u8_out(0/*id*/, snd_ptr[0] >> 8);
-h7seg_u8_out(2/*id*/, snd_ptr[0] & 0xFF);
-h7seg_u8_out(4/*id*/, snd_ptr[1] >> 8);
-while(1){;}
-#endif
 // TODO : prepare a buffer while sending the previous one. Before that, should test on real HW with buffer #0 only.
     int pos;
     for(pos=0; pos<count; pos+=BUFFSPI_MAXCNT)
@@ -109,9 +83,8 @@ while(1){;}
 
         /* Setting up the core. */
         p16_spi[BUFFSPI_REG_LENGTH       ] = len; /* Number of words = 16 bit each. */
-        //p16_spi[BUFFSPI_REG_LENGTH       ] = len+1; /* Number of words = 16 bit each. */
         p16_spi[BUFFSPI_REG_CS_MODE      ] =   1; /* CS blinking. */
-        p16_spi[BUFFSPI_REG_DELAY        ] =  70; /* 70 clocks @ 116 Mhz between each 16 bit. */
+        p16_spi[BUFFSPI_REG_DELAY        ] =   1; /* 1 clock @ 116 Mhz between each 16 bit. */
         p16_spi[BUFFSPI_REG_BUFFER_SELECT] =   0; /* Using buffer 0. */
 
         /* Fill transmit buffer with input data. */
@@ -130,62 +103,57 @@ while(1){;}
              */
             for(i=0; i<len; i++)
             {
-                p16_spi[BUFFSPI_BUFFER0_WRITE + i] = (unsigned short)i;
+                p16_spi[BUFFSPI_BUFFER0_WRITE + i] = (unsigned short)((i & 0xFF) * 0x0101);
             }
         }
-#if 1
-if(snd_ptr)
-{
-    h7seg_u8_out(0/*id*/, p16_spi[BUFFSPI_BUFFER0_WRITE + 0] >> 8);
-    h7seg_u8_out(2/*id*/, p16_spi[BUFFSPI_BUFFER0_WRITE + 0] & 0xFF);
-    h7seg_u8_out(4/*id*/, p16_spi[BUFFSPI_BUFFER0_WRITE + 1] >> 8);
-}
-//return;
-#endif
-
-for(i=0; i<len; i++)
-{
-    p16_spi[BUFFSPI_BUFFER0_READ + i] = 0xABCD;
-}
-
-
-h7seg_u4_out(2/*id*/, 0x1);
 
         /* Fire spi transaction. */
         p16_spi[BUFFSPI_REG_START] = 1; /* Go go go! */
 
-h7seg_u4_out(2/*id*/, 0x2);
 
-#if 0
         /* Wait until complete. */
+#if 0 // Official way of waiting (with transfer busy flag polling), which doesn't works here.
         while(p16_spi[BUFFSPI_REG_START] != 0);
-h7seg_u4_out(2/*id*/, 0x3);
-#else
+#else // Alternate waiting with check of the count of words sent so far.
+        volatile unsigned long wait_cnt = 0;
+        while(1)
+        {
+            volatile unsigned short c1 = p16_spi[BUFFSPI_REG_COUNTER];
+            volatile unsigned short c2 = p16_spi[BUFFSPI_REG_COUNTER];
+            wait_cnt++;
+            //logout(WL_LOG_DEBUGEASY, "C[%04u][%04u]", c1, c2);
+            if((c1 >= len) && (c2 >= len))
+            {
+                break;
+            }
+        }
+#if SPI_DEBUG_LOGS == 1
+        logout(WL_LOG_DEBUGEASY, "wait_cnt[%07u]", wait_cnt);
+#endif // SPI_DEBUG_LOGS == 1
+#endif
 
         /* Read the received data. */
         if(rcv_ptr)
         {
-for(i=0; i<5; i++)
-{
-    logout(WL_LOG_DEBUGEASY, "B[%04X] L[%3u] D:%04X %04X %04X", 
-        p16_spi[BUFFSPI_REG_START ], 
-        p16_spi[BUFFSPI_REG_LENGTH], 
-        p16_spi[BUFFSPI_BUFFER0_READ +  0], 
-        p16_spi[BUFFSPI_BUFFER0_READ +  1], 
-        p16_spi[BUFFSPI_BUFFER0_READ + 12]);
-}
-#endif
+#if SPI_DEBUG_LOGS == 1 // Extra log output to verify that everything is received
+            for(i=0; i<5; i++)
+            {
+                logout(WL_LOG_DEBUGEASY, "B[%04X] C[%04u] D:%04X %04X %04X %04X", 
+                    p16_spi[BUFFSPI_REG_START], 
+                    p16_spi[BUFFSPI_REG_COUNTER], 
+                    p16_spi[BUFFSPI_BUFFER0_READ +   0], 
+                    p16_spi[BUFFSPI_BUFFER0_READ +  10], 
+                    p16_spi[BUFFSPI_BUFFER0_READ + 100], 
+                    p16_spi[BUFFSPI_BUFFER0_READ + len-1]);
+            }
+#endif // SPI_DEBUG_LOGS == 1
 
             for(i=0; i<len; i++)
             {
                 *rcv_ptr++ = p16_spi[BUFFSPI_BUFFER0_READ + i];
             }
         }
-h7seg_u4_out(2/*id*/, 0x4);
     }
-
-    /* Enable debug with 7-segments display here. */
-    h7seg_disable();
 }
 
 
@@ -213,9 +181,6 @@ void spi_get_version(wl_spicomm_version_t* ver)
 {
 #if SPI_ENABLE == 1
 
-h7seg_all_clear();
-
-
     wl_spi_pkt_t pkt_dat;
     wl_spi_pkt_t* pkt = &pkt_dat;
 
@@ -226,31 +191,20 @@ h7seg_all_clear();
     pkt->cmn.rsp_len  = sizeof(wl_spi_pkt_t); // TODO
 
 
-// h7seg_u8_out(0/*id*/, pkt->cmn.command);
-// h7seg_u8_out(2/*id*/, pkt->cmn.magic_ca);
-// h7seg_u8_out(4/*id*/, 0xFE);
-// while(1){;}
-
-h7seg_u4_out(4/*id*/, 0xA);
     /* Wait for STM32 to be ready until being able to send packet. */
     while(IORD(SPI_SYNC_BASE, 0) == 1);
 
-h7seg_u4_out(4/*id*/, 0xB);
     spi_send((unsigned short*)pkt, sizeof(wl_spi_pkt_t) / sizeof(unsigned short));
 
-h7seg_u4_out(4/*id*/, 0xC);
     /* Wait for STM32 to be ready until receiving response. */
     while(IORD(SPI_SYNC_BASE, 0) == 0);
 
-h7seg_u4_out(4/*id*/, 0xD);
     spi_receive((unsigned short*)pkt, pkt->cmn.rsp_len / sizeof(unsigned short));
 
-h7seg_u4_out(4/*id*/, 0xE);
     /* Don't forget to copy version
      * informations to output buffer.
      */
     memcpy(ver, pkt->data, sizeof(wl_spicomm_version_t));
-h7seg_u4_out(4/*id*/, 0xF);
 
 #if SPI_DEBUG_LOGS == 1
     //if(log_output)
@@ -705,6 +659,26 @@ void spi_rxtx_test(void)
 //     spi_debug_ep(params);
 // #endif // SPI_ENABLE == 1
 
+    /* SPI start : red LED OFF, green LED OFF. */
+    IOWR(LEDS_BASE, 0, 0x00);
+
+    /* First, send transmission header. */
+    wl_spi_pkt_t pkt_dat;
+    wl_spi_pkt_t* pkt = &pkt_dat;
+    unsigned short* pkt_u16 = (unsigned short*)pkt;
+    unsigned short len = sizeof(wl_spi_pkt_t) / sizeof(unsigned short);
+
+    memset(pkt, 0, sizeof(wl_spi_pkt_t));
+    pkt->cmn.magic_ca = 0xCA;
+    pkt->cmn.magic_fe = 0xFE;
+    pkt->cmn.pkt_len = sizeof(wl_spi_pkt_t);//params[0];
+    pkt->cmn.rsp_len = sizeof(wl_spi_pkt_t);//params[3];
+    memset(pkt->params, '\0', WL_SPI_PARAMS_LEN);
+    memset(pkt->data  , '\0', WL_SPI_DATA_LEN  );
+    strcpy((char*)pkt->data, "Hi, this is a test from MAX10.");
+    pkt->data[WL_SPI_DATA_LEN-1] = '\0';
+
+
 
     /* Buffered spi test. */
     int i;
@@ -712,28 +686,116 @@ void spi_rxtx_test(void)
     volatile unsigned short b16;
 
     /* Setting up the core. */
-    p16_spi[BUFFSPI_REG_LENGTH       ] = 256; /* 256 words 16 bit each. */
+    p16_spi[BUFFSPI_REG_LENGTH       ] = len; /* Number of words = 16 bit each. */
     p16_spi[BUFFSPI_REG_CS_MODE      ] =   1; /* CS blinking. */
-    p16_spi[BUFFSPI_REG_DELAY        ] =  70; /* 70 clocks @ 116 Mhz between each 16 bit. */
+    p16_spi[BUFFSPI_REG_DELAY        ] =   1; /* 1 clock @ 116 Mhz between each 16 bit. */
     p16_spi[BUFFSPI_REG_BUFFER_SELECT] =   0; /* Using buffer 0. */
 
     /* Fill buffer with test data. */
-    for (i=0; i<256; i++)
+    for(i=0; i<len; i++)
     {
-        p16_spi[BUFFSPI_BUFFER0_WRITE + i] = i*0x0101;
+        p16_spi[BUFFSPI_BUFFER0_WRITE + i] = pkt_u16[i];
+    }
+
+
+    /* internals ready : red LED ON, green LED OFF. */
+    IOWR(LEDS_BASE, 0, 0x01);
+    //IOWR(EXTRA_LEDS_BASE, 0, 0x01); // EXTRA DEBUG
+
+    /* Wait for STM32 to be ready until sending transmission header. */
+    while(IORD(SPI_SYNC_BASE, 0) == 1);
+
+    /* SYNC OK : red LED ON, green LED ON. */
+    IOWR(LEDS_BASE, 0, 0x03);
+    //IOWR(EXTRA_LEDS_BASE, 0, 0x03); // EXTRA DEBUG
+
+    /* Small wait : red LED OFF, green LED OFF. */
+    IOWR(LEDS_BASE, 0, 0x00);
+
+
+    /* Fire spi transaction/ */
+    p16_spi[BUFFSPI_REG_START] = 1; /* Go go go! */
+
+    /* Wait until complete. */
+    volatile unsigned long wait_cnt = 0;
+    while(1)
+    {
+        volatile unsigned short c1 = p16_spi[BUFFSPI_REG_COUNTER];
+        volatile unsigned short c2 = p16_spi[BUFFSPI_REG_COUNTER];
+        wait_cnt++;
+        if((c1 >= len) && (c2 >= len))
+        {
+            break;
+        }
+    }
+
+
+    /* Transmit end : red LED ON, green LED OFF. */
+    IOWR(LEDS_BASE, 0, 0x01);
+    //IOWR(EXTRA_LEDS_BASE, 0, 0x07); // EXTRA DEBUG
+
+
+
+    /* Wait for STM32 to be ready until receiving response. */
+    while(IORD(SPI_SYNC_BASE, 0) == 0);
+    IOWR(LEDS_BASE, 0, 0x03);
+    //IOWR(EXTRA_LEDS_BASE, 0, 0x0F); // EXTRA DEBUG
+
+    IOWR(LEDS_BASE, 0, 0x00);
+
+
+
+    /* Receive response from STM32. */
+    for (i=0; i<len; i++)
+    {
+        p16_spi[BUFFSPI_BUFFER0_WRITE + i] = 0xABCD;
     }
 
     /* Fire spi transaction/ */
     p16_spi[BUFFSPI_REG_START] = 1; /* Go go go! */
 
     /* Wait until complete. */
-    while(p16_spi[BUFFSPI_REG_START] != 0) {;}
-
-    /* Read data from read buffer into dummy variable. */
-    for(i=0;i<256;i++)
+    /*volatile unsigned long */wait_cnt = 0;
+    while(1)
     {
-        b16 = p16_spi[BUFFSPI_BUFFER0_READ + i];
+        volatile unsigned short c1 = p16_spi[BUFFSPI_REG_COUNTER];
+        volatile unsigned short c2 = p16_spi[BUFFSPI_REG_COUNTER];
+        wait_cnt++;
+        if((c1 >= len) && (c2 >= len))
+        {
+            break;
+        }
     }
+
+    /* Copy back to local variable. */
+    for (i=0; i<len; i++)
+    {
+        pkt_u16[i] = p16_spi[BUFFSPI_BUFFER0_READ + i];
+    }
+
+
+    IOWR(LEDS_BASE, 0, 0x01);
+    pkt->params[WL_SPI_PARAMS_LEN-1] = '\0';
+
+
+#ifdef SPI_DEBUG_LOGS
+    //if(log_output)
+    {
+        /* Output received data to log. */
+        logout(WL_LOG_DEBUGEASY, "[SPI] HDR[%02X %02X] PARAMS[%s] rsp_len[%u]"
+            , pkt->cmn.magic_ca
+            , pkt->cmn.magic_fe
+            //, pkt->cmn.pkt_len
+            , pkt->cmn.rsp_len
+            , pkt->params);
+        int i;
+        for(i=0; i<8; i++)
+        {
+            unsigned char c = ((unsigned char*)pkt)[i];
+            logout(WL_LOG_DEBUGNORMAL, "[SPI]| Rcv[%3d]:0x%02X (%c)", i, c, c);
+        }
+    }
+#endif //SPI_DEBUG_LOGS
 }
 
 
