@@ -1,0 +1,9 @@
+09:59:30 **** Incremental Build of configuration Nios II for project wasca_test9 ****
+make all 
+Info: Building ../wasca_test9_bsp/
+D:/altera/15.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../wasca_test9_bsp/
+[BSP build complete]
+[wasca_test9 build complete]
+
+09:59:31 Build Finished (took 780ms)
+
